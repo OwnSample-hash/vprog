@@ -1,11 +1,11 @@
-﻿<Window x:Class="car.Registration"
+﻿<Window x:Class="car.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:car"
         mc:Ignorable="d"
-        Title="Regisztráció" Height="450" Width="800">
+        Title="Login" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -17,21 +17,21 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Content="Regisztráció" Grid.ColumnSpan="2"
-               VerticalAlignment="Center" HorizontalAlignment="Center"
-               FontSize="30" FontWeight="Bold" FontFamily="Times New Roman"/>
-        <Label Content="Név:" Grid.Row="1" VerticalAlignment="Center"
-               HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
-               FontFamily="Times New Roman"/>
+        <Label Content="Bejelentkezés" Grid.ColumnSpan="2"
+           VerticalAlignment="Center" HorizontalAlignment="Center"
+           FontSize="30" FontWeight="Bold" FontFamily="Times New Roman"/>
+        <Label Content="Felhasználónév:" Grid.Row="1" VerticalAlignment="Center"
+           HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
+           FontFamily="Times New Roman"/>
         <TextBox x:Name="tbNev" Grid.Row="1" Grid.Column="1" Margin="30,0,30,0"
-                 Height="30"/>
+             Height="30"/>
         <Label Content="Jelszó:" Grid.Row="2" VerticalAlignment="Center"
-       HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
-       FontFamily="Times New Roman"/>
+   HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
+   FontFamily="Times New Roman"/>
         <PasswordBox x:Name="pbJelszo" Grid.Row="2" Grid.Column="2" Margin="30,0,30,0"
-         Height="30"/>
-        <Button x:Name="btnRegisztral" FontSize="30" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="4" Margin="150,20,150,20"
-                Content="Regisztrálok" Click="btnRegisztral_Click"/>
+     Height="30"/>
+        <Button x:Name="btnLogin" FontSize="30" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="4" Margin="150,20,150,20"
+            Content="Bejelentkezés" Click="btnLogin_Click"/>
 
     </Grid>
 </Window>
