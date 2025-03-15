@@ -1,0 +1,4 @@
+﻿CREATE TABLE Permissions (
+  Id INT PRIMARY KEY,
+  Permission VARCHAR(255) NOT NULL UNIQUE
+);
