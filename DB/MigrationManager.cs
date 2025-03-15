@@ -3,6 +3,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using Z.Dapper.Plus;
 using BC = BCrypt.Net.BCrypt;
+
 namespace car.DB {
   class MigrationManager {
     private readonly string _connectionString;
