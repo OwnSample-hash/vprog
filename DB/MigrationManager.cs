@@ -66,10 +66,8 @@ namespace car.DB {
       }
       foreach (var user in users) {
         user.Password = BC.HashPassword(user.Password, 12);
-        Console.WriteLine($"User perm: {user.PermissionId}");
       }
       _connection.BulkDelete(users);
-      Console.WriteLine(users.Count);
       _connection.BulkInsert(users);
       return true;
     }
