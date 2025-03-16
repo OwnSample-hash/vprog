@@ -29,10 +29,6 @@
     <None Update="Migrations\002_Users.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Update="Seeds\001_Permissions.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -42,15 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Logging\" />
+    <Folder Include="Themes\" />
     <Folder Include="Seeds\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>

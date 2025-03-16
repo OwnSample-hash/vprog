@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:car"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
+        Title="Login" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -24,7 +24,7 @@
            HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
            FontFamily="Times New Roman"/>
         <TextBox x:Name="tbNev" Grid.Row="1" Grid.Column="1" Margin="30,0,30,0"
-             Height="30"/>
+             Height="30" Padding="2"/>
         <Label Content="Jelszó:" Grid.Row="2" VerticalAlignment="Center"
    HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
    FontFamily="Times New Roman"/>
