@@ -1,12 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using car.Session;
 
 namespace car {
-  enum EPermission {
-    User = 0,
-    Seller = 1,
-    Admin = 2
-  }
 
   [Table("Users")]
   class User {
@@ -17,10 +13,19 @@ namespace car {
 
     public string Password { get; set; } = "";
 
-    private EPermission _Permission { get; set; } = EPermission.User;
+    public ESessionType Permission { get; private set; } = ESessionType.User;
     public int PermissionId {
-      get => (int)this._Permission;
-      set => this._Permission = (EPermission)value;
+      get => (int)this.Permission;
+      set => this.Permission = (ESessionType)value;
+    }
+
+    public static User getEmpty() {
+      return new User {
+        Id = -1,
+        Username = "",
+        Password = "",
+        Permission = ESessionType.None
+      };
     }
   }
 }
