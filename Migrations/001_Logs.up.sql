@@ -1,0 +1,9 @@
+CREATE TABLE LOGS (
+	Id INT PRIMARY KEY,
+	Description VARCHAR(MAX),
+	LevelId INT,
+	Source VARCHAR(MAX),
+	Line INT,
+	Date DATETIME DEFAULT GETDATE()
+	FOREIGN KEY (LevelId) REFERENCES LogLevels(Id)
+);

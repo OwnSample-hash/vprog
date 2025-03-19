@@ -20,12 +20,6 @@ namespace car {
           MessageBox.Show("Hiba történt!");
           break;
       }
-      //var t = new DispatcherTimer { Interval = new(0, 0, 0, 0, 50) };
-      //t.Tick += (s, e) => {
-      //  t.Stop();
-      //  DialogResult = false;
-      //};
-      //t.Start();
     }
 
     private void btnLogin_Click(object sender, RoutedEventArgs e) {

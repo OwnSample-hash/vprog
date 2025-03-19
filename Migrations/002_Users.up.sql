@@ -1,7 +1,0 @@
-CREATE TABLE Users (
-ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-Username VARCHAR(255) NOT NULL,
-Password VARCHAR(255) NOT NULL,
-PermissionId integer NOT NULL DEFAULT 1,
-FOREIGN KEY (PermissionId) REFERENCES dbo.Permissions(Id)
-);

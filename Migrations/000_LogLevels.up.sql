@@ -1,0 +1,4 @@
+CREATE TABLE LogLevels (
+  Id INT PRIMARY KEY,
+  Name VARCHAR(MAX)
+);

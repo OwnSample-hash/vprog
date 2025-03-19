@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Windows;
+using car.Logging;
 
 namespace car;
 
@@ -10,6 +11,8 @@ namespace car;
 public partial class MainWindow : Window {
 
   public static string conString = File.ReadAllText("connectionString.txt", Encoding.UTF8);
+
+  public static ILogger Logger = new DBLogging();
 
   public static bool verbose = Environment.GetCommandLineArgs().Any((e) => e == "--verbose");
   public MainWindow() {
