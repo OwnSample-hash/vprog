@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.Data.SqlClient;
-using Z.Dapper.Plus;
 
 namespace car.Logging {
   class DBLogging : ILogger {
@@ -28,23 +27,25 @@ namespace car.Logging {
         Log(new Message(e.Message, ELogLvl.ERROR));
       }
       senderThread = new Thread(() => {
-        if (!Ready) {
-          try {
-            _connection.Open();
-            Ready = true;
-          } catch (Exception e) {
-            Ready = false;
-            Console.WriteLine(e.Message);
-            Log(new Message(e.Message, ELogLvl.ERROR));
+        while (true) {
+          if (!Ready) {
+            try {
+              _connection.Open();
+              Ready = true;
+            } catch (Exception e) {
+              Ready = false;
+              Console.WriteLine(e.Message);
+              Log(new Message(e.Message, ELogLvl.ERROR));
+              continue;
+            }
           }
-          while (true) {
-            var start = DateTime.Now.Nanosecond;
-            OnTick();
-            var elapsed = DateTime.Now.Nanosecond - start;
-            Thread.Sleep((int)(elapsed > delay.TotalMilliseconds ? 0 : delay.TotalMilliseconds - elapsed));
-          }
+          var start = DateTime.Now.Nanosecond;
+          OnTick();
+          var elapsed = DateTime.Now.Nanosecond - start;
+          Thread.Sleep((int)(elapsed > delay.TotalMilliseconds ? 0 : delay.TotalMilliseconds - elapsed));
         }
       });
+      senderThread.Name = "DBLogging";
       senderThread.Start();
     }
 
@@ -67,13 +68,17 @@ namespace car.Logging {
     }
 
     private void OnTick() {
-      lock (_messagesBackLog) {
-        List<Message> messages = [];
+      lock (_messagesBackLog)
         while (_messagesBackLog.Count > 0)
-          if (_messagesBackLog.TryDequeue(out var message))
-            messages.Add(message);
-        _connection.BulkInsert(messages);
-      }
+          if (_messagesBackLog.TryDequeue(out var message)) {
+            var cmd = new SqlCommand("INSERT INTO Logs (Description, LevelId, Source, Line, Date) VALUES (@Description, @LevelId, @Source, @Line, @Date)", _connection);
+            cmd.Parameters.AddWithValue("@Description", message.Description);
+            cmd.Parameters.AddWithValue("@LevelId", message.LevelId);
+            cmd.Parameters.AddWithValue("@Source", message.Source);
+            cmd.Parameters.AddWithValue("@Line", message.Line);
+            cmd.Parameters.AddWithValue("@Date", message.TimeStamp);
+            cmd.ExecuteNonQuery();
+          }
     }
   }
 }

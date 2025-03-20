@@ -21,17 +21,18 @@ public partial class MainWindow : Window {
     if (args.Length > 1 && args.Any((e) => e == "--migrate")) {
       var migration = new DB.MigrationManager(conString, verbose);
       if (migration.Migrate(args.Any((e) => e == "--down"))) {
-        //MessageBox.Show("Migráció sikeres");
+        Logger.Log("Migration completed!");
       } else {
-        MessageBox.Show("Migráció sikertelen");
+        Logger.Log("Migration failed!", ELogLvl.ERROR);
       }
     }
     if (args.Length > 1 && args.Any((e) => e == "--seed")) {
       var conString = File.ReadAllText("connectionString.txt", Encoding.UTF8);
       var migration = new DB.MigrationManager(conString, verbose);
       if (migration.Seed()) {
+        Logger.Log("Seed completed!");
       } else {
-        MessageBox.Show("Adatok betöltése sikertelen");
+        Logger.Log("Seed failed!", ELogLvl.ERROR);
       }
     }
   }

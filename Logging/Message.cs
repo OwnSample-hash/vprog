@@ -1,10 +1,15 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
 namespace car.Logging {
+
+  [Table("Logs")]
   public class Message(string description, ELogLvl level,
     [CallerFilePath] string source = "",
     [CallerLineNumber] int line = 0) {
 
+    [Key]
     public int Id { get; set; } = 0;
 
     public string Description { get; set; } = description;
