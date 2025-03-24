@@ -1,0 +1,2 @@
+﻿ALTER TABLE Users DROP CONSTRAINT Users_Permissions_ID_fk;
+DROP TABLE Users;

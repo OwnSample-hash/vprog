@@ -1,9 +1,13 @@
 CREATE TABLE Logs (
 	Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	UserId INT
+		CONSTRAINT Logs_Users_ID_fk
+			REFERENCES Users,
 	Description VARCHAR(MAX),
-	LevelId INT,
+	LevelId INT
+		CONSTRAINT Logs_Levels_ID_fk
+			REFERENCES LogLevels,
 	Source VARCHAR(MAX),
 	Line INT,
 	Date DATETIME DEFAULT GETDATE()
-	FOREIGN KEY (LevelId) REFERENCES LogLevels(Id)
 );

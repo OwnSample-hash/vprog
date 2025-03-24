@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -17,40 +17,52 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Migrations\000_LogLevels.up.sql">
+    <None Update="Migrations\002_LogLevels.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\000_LogsLevels.down.sql">
+    <None Update="Migrations\002_LogsLevels.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\001_Logs.down.sql">
+    <None Update="Migrations\003_Logs.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\001_Logs.up.sql">
+    <None Update="Migrations\003_Logs.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Migrations\001_Permissions.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\002_Permissions.down.sql">
+    <None Update="Migrations\000_Permissions.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\002_Permissions.up.sql">
+    <None Update="Migrations\000_Permissions.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\002_Users.down.sql">
+    <None Update="Migrations\001_Users.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Migrations\001_Permissions.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\002_Users.up.sql">
+    <None Update="Migrations\001_Users.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\003_Users.down.sql">
+    <None Update="Migrations\001_Users.down.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Migrations\003_Users.up.sql">
+    <None Update="Migrations\001_Users.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migrations\004_Cars.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migrations\004_Cars.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migrations\005_Pictures.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migrations\005_Pictures.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Seeds\000_LogLevels.sql">
