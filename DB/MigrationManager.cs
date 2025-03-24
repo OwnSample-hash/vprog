@@ -18,6 +18,10 @@ namespace car.DB {
       _connection.Open();
     }
 
+    ~MigrationManager() {
+      _connection.Close();
+    }
+
     public bool Migrate(bool downFirst) {
       if (!Directory.Exists("Migrations")) {
         return false;
