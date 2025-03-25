@@ -1,0 +1,33 @@
+﻿<Window x:Class="car.AdminTool.AdminTool"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:car.AdminTool"
+        mc:Ignorable="d"
+        Title="AdminTool" Height="720" Width="1280" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="360"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="640"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserSortColumns="True"
+          CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column"
+          VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="25" />
+                <DataGridTextColumn Header="User" Binding="{Binding User}" Width="75" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="225*"/>
+                <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="75"/>
+                <DataGridTextColumn Header="Source" Binding="{Binding SL}" Width="225"  Visibility="Collapsed" x:Name="Source"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

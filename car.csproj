@@ -65,6 +65,12 @@
     <None Update="Migrations\005_Pictures.up.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Migrations\010_Logs.down.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migrations\010_Logs.up.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Seeds\000_LogLevels.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
