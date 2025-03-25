@@ -71,8 +71,7 @@ namespace car.DB {
       foreach (var user in users) {
         user.Password = BC.HashPassword(user.Password, 12);
       }
-      _connection.BulkDelete(users);
-      _connection.BulkInsert(users);
+      _connection.BulkUpdate(users);
       return true;
     }
   }
