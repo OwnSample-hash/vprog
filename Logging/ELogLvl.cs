@@ -1,7 +1,7 @@
 ﻿namespace car.Logging {
 
   public enum ELogLvl {
-    TRACE,
+    TRACE = 1,
     DEBUG,
     INFO,
     WARN,

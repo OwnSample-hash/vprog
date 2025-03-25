@@ -9,7 +9,7 @@ namespace car.Session {
 
     private readonly SqlConnection _connection = new(MainWindow.conString);
 
-    private User _user = User.getEmpty();
+    public static User User { get; private set; } = User.getEmpty();
 
     private ESessionAuthError _eSessionAuthError = ESessionAuthError.OK;
     public void Login(object sender, RoutedEventArgs e) {
@@ -23,12 +23,13 @@ namespace car.Session {
           _eSessionAuthError = ESessionAuthError.OK;
           return;
         } else
-          _user = user;
-        if (BC.Verify(login.Password, _user.Password)) {
-          this.Type = _user.Permission;
+          User = user;
+        if (BC.Verify(login.Password, User.Password)) {
+          MainWindow.Logger.Log($"User {User.Username} logged in");
+          this.Type = User.Permission;
         } else {
           _eSessionAuthError = ESessionAuthError.InvalidCredentials;
-          _user = User.getEmpty();
+          User = User.getEmpty();
           ((Button)sender).RaiseEvent(new(Button.ClickEvent));
           _eSessionAuthError = ESessionAuthError.OK;
           return;
@@ -37,7 +38,7 @@ namespace car.Session {
     }
 
     public void Logout(object sender, RoutedEventArgs e) {
-      _user = User.getEmpty();
+      User = User.getEmpty();
       this.Type = ESessionType.None;
     }
   }

@@ -7,5 +7,11 @@ namespace car.Logging {
       [CallerLineNumber] int lineNumber = 0);
 
     void Log(Message message);
+
+    void SysLog(string message, ELogLvl level = ELogLvl.INFO,
+      [CallerFilePath] string filePath = "",
+      [CallerLineNumber] int lineNumber = 0);
+
+    void SysLog(Message message);
   }
 }

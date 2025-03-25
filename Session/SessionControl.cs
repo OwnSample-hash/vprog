@@ -30,6 +30,9 @@ namespace car.Session {
       if (GetTemplateChild("btLogout") is Button button2) {
         button2.Click += Logout;
       }
+      if (GetTemplateChild("btAdmin") is Button btAdmin) {
+        btAdmin.Click += (_, _) => { new AdminTool.AdminTool().Show(); };
+      }
     }
 
     private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
@@ -39,12 +42,12 @@ namespace car.Session {
     }
 
     private void UpdateVisualState() {
-      string state = $"LoggedIn_{_user.Permission}";
+      string state = $"LoggedIn_{User.Permission}";
       if (GetTemplateChild("SessionType") is Label sessionType) {
-        if (_user.Permission == ESessionType.None)
+        if (User.Permission == ESessionType.None)
           sessionType.Content = "Welcome! Please login!";
         else
-          sessionType.Content = $"Welcome! {_user.Username}";
+          sessionType.Content = $"Welcome! {User.Username}";
       }
       if (VisualStateManager.GoToState(this, state, true))
         Console.WriteLine("Switched state");
