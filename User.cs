@@ -2,7 +2,7 @@
 
 namespace car {
 
-  class User {
+  public class User {
     public int Id { get; set; } = 0;
     public string Username { get; set; } = "";
 
@@ -21,6 +21,15 @@ namespace car {
         Username = "",
         Password = "",
         Permission = ESessionType.None
+      };
+    }
+
+    public static User getSystem() {
+      return new User {
+        Id = 0,
+        Username = "System",
+        Password = "",
+        Permission = ESessionType.System
       };
     }
   }
