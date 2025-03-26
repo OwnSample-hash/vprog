@@ -23,7 +23,9 @@
 
 
 
-        <local:Session/>
+         <!--<Button x:Name="btnLogin" FontSize="30" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="2" Margin="350,50,350,50"
+     Content="Belépés" Click="btnLogin_Click"/>-->
+        <local:Session Grid.ColumnSpan="2" Grid.Row="2" Margin="350,50,350,50" />
     </Grid>
 
 

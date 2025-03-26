@@ -8,7 +8,7 @@
                     <Border Padding="5" CornerRadius="5">
                         <WrapPanel>
                             <Label x:Name="SessionType" Content="Session" FontSize="32" FontWeight="Bold"/>
-                            <Button x:Name="btLogin" Content="Login" Width="100" Height="25" />
+                            <Button x:Name="btLogin" Content="Belépés" Width="100" Height="25" />
                             <Button x:Name="btLogout" Content="Logout" Width="100" Height="25" Visibility="Collapsed"/>
                             <Button x:Name="btSeller" Content="Seller menu" Width="100" Height="25" Visibility="Collapsed"/>
                             <Button x:Name="btAdmin" Content="Admin tools" Width="100" Height="25" Visibility="Collapsed"/>
