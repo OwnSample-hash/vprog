@@ -5,16 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:car.Session"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="MainWindow" Height="920" Width="1280">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="7*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <local:Session Grid.Column="1" Grid.Row="0" x:Name="SessionController" />
+        <Label Content="Autóskereskedés" Grid.ColumnSpan="2"
+    VerticalAlignment="Center" HorizontalAlignment="Center"
+    FontSize="50" FontWeight="Bold" FontFamily="Times New Roman"/>
+
+
+
+        <Button x:Name="btnLogin" FontSize="30" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="2" Margin="350,50,350,50"
+     Content="Belépés" Click="btnLogin_Click"/>
+
     </Grid>
+
+
 </Window>

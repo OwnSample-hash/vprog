@@ -18,20 +18,22 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Label Content="Bejelentkezés" Grid.ColumnSpan="2"
-           VerticalAlignment="Center" HorizontalAlignment="Center"
-           FontSize="30" FontWeight="Bold" FontFamily="Times New Roman"/>
+        VerticalAlignment="Center" HorizontalAlignment="Center"
+        FontSize="30" FontWeight="Bold" FontFamily="Times New Roman"/>
         <Label Content="Felhasználónév:" Grid.Row="1" VerticalAlignment="Center"
-           HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
-           FontFamily="Times New Roman"/>
+        HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
+        FontFamily="Times New Roman"/>
         <TextBox x:Name="tbNev" Grid.Row="1" Grid.Column="1" Margin="30,0,30,0"
-             Height="30" Padding="2"/>
+          Height="30" Padding="2"/>
         <Label Content="Jelszó:" Grid.Row="2" VerticalAlignment="Center"
-   HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
-   FontFamily="Times New Roman"/>
+HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
+FontFamily="Times New Roman"/>
         <PasswordBox x:Name="pbJelszo" Grid.Row="2" Grid.Column="2" Margin="30,0,30,0"
-     Height="30"/>
+  Height="30"/>
         <Button x:Name="btnLogin" FontSize="30" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="4" Margin="150,20,150,20"
-            Content="Bejelentkezés" Click="btnLogin_Click"/>
+         Content="Bejelentkezés" Click="btnLogin_Click"/>
 
     </Grid>
+
+
 </Window>
