@@ -11,11 +11,12 @@ namespace car;
 /// </summary>
 public partial class MainWindow : Window {
 
-  public static string conString = File.ReadAllText("connectionString.txt", Encoding.UTF8);
+  public static string conString = App.Conf.ConnectionString;
 
   public static ILogger Logger = new DBLogging();
 
-  public static bool Verbose = Environment.GetCommandLineArgs().Any((e) => e == "--verbose");
+  public static bool Verbose = Environment.GetCommandLineArgs().Any((e) => e == "--verbose") || App.Conf.Verbose;
+
   public MainWindow() {
     bool SkipDown = false;
     if (Verbose) {
@@ -49,10 +50,12 @@ public partial class MainWindow : Window {
         Logger.SysLog("Seed failed!", ELogLvl.ERROR);
       }
     }
-  }
-  ~MainWindow() {
-    if (Verbose) {
-      DebugUtily.AllocConsoleOnVerbose.DoFreeConsole();
-    }
+    this.Closed += (_, _) => {
+      Logger.SysLog("Closing MainWindow", ELogLvl.DEBUG);
+      if (Verbose) {
+        DebugUtily.AllocConsoleOnVerbose.DoFreeConsole();
+      }
+      Logger.Dispose();
+    };
   }
 }
