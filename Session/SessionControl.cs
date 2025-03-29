@@ -49,10 +49,7 @@ namespace car.Session {
         else
           sessionType.Content = $"Welcome! {User.Username}";
       }
-      if (VisualStateManager.GoToState(this, state, true))
-        Console.WriteLine("Switched state");
-      else
-        Console.WriteLine("failed to switch state");
+      if (VisualStateManager.GoToState(this, state, true)) { } else { }
     }
   }
 }
