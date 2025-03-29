@@ -4,8 +4,6 @@ using Microsoft.Data.SqlClient;
 namespace car.Logging {
   class DBLogging : ILogger {
 
-    public bool Verbose { get; set; }
-
     public ELogLvl LogLevel { get; set; } = ELogLvl.INFO;
 
     public bool Ready { get; private set; }
@@ -17,6 +15,8 @@ namespace car.Logging {
     private readonly Queue<Message> _messagesBackLog = [];
 
     private readonly Thread senderThread;
+
+    private bool _disposed = false;
     public DBLogging() {
       try {
         _connection.Open();
@@ -26,8 +26,8 @@ namespace car.Logging {
         Console.WriteLine(e.Message);
         Log(new Message(e.Message, ELogLvl.ERROR));
       }
-      senderThread = new Thread(() => {
-        while (true) {
+      senderThread = new(() => {
+        while (!_disposed) {
           if (!Ready) {
             try {
               _connection.Open();
@@ -40,7 +40,18 @@ namespace car.Logging {
             }
           }
           var start = DateTime.Now.Nanosecond;
-          OnTick();
+          lock (_messagesBackLog)
+            while (_messagesBackLog.Count > 0)
+              if (_messagesBackLog.TryDequeue(out var message)) {
+                var cmd = new SqlCommand("INSERT INTO Logs (Description, UserId, LevelId, Source, Line, Date) VALUES (@Description, @UserId, @LevelId, @Source, @Line, @Date)", _connection);
+                cmd.Parameters.AddWithValue("@Description", message.Description);
+                cmd.Parameters.AddWithValue("@UserId", message.UserId);
+                cmd.Parameters.AddWithValue("@LevelId", message.LevelId);
+                cmd.Parameters.AddWithValue("@Source", message.Source);
+                cmd.Parameters.AddWithValue("@Line", message.Line);
+                cmd.Parameters.AddWithValue("@Date", message.TimeStamp);
+                cmd.ExecuteNonQuery();
+              }
           var elapsed = DateTime.Now.Nanosecond - start;
           double remainingMilliseconds = delay.TotalMilliseconds - (elapsed / 1_000_000.0);
           Thread.Sleep(remainingMilliseconds > 0 ? (int)remainingMilliseconds : 0);
@@ -50,7 +61,11 @@ namespace car.Logging {
       senderThread.Start();
     }
 
-    ~DBLogging() {
+    public void Dispose() {
+      if (_disposed)
+        return;
+      _disposed = true;
+      senderThread.Join();
       _connection.Close();
     }
 
@@ -59,7 +74,10 @@ namespace car.Logging {
       [CallerLineNumber] int lineNumber = 0) {
       if (eLogLvl < LogLevel)
         return;
-      _messagesBackLog.Enqueue(new Message(message, eLogLvl, Session.Session.User.Id, filePath, lineNumber));
+      var m = new Message(message, eLogLvl, Session.Session.User.Id, filePath, lineNumber);
+      _messagesBackLog.Enqueue(m);
+      if (eLogLvl == ELogLvl.TRACE && App.Conf.Verbose)
+        Console.WriteLine(m);
     }
 
     public void Log(Message message) {
@@ -67,27 +85,17 @@ namespace car.Logging {
         return;
       message.UserId = Session.Session.User.Id;
       _messagesBackLog.Enqueue(message);
-    }
-
-    private void OnTick() {
-      lock (_messagesBackLog)
-        while (_messagesBackLog.Count > 0)
-          if (_messagesBackLog.TryDequeue(out var message)) {
-            var cmd = new SqlCommand("INSERT INTO Logs (Description, UserId, LevelId, Source, Line, Date) VALUES (@Description, @UserId, @LevelId, @Source, @Line, @Date)", _connection);
-            cmd.Parameters.AddWithValue("@Description", message.Description);
-            cmd.Parameters.AddWithValue("@UserId", message.UserId);
-            cmd.Parameters.AddWithValue("@LevelId", message.LevelId);
-            cmd.Parameters.AddWithValue("@Source", message.Source);
-            cmd.Parameters.AddWithValue("@Line", message.Line);
-            cmd.Parameters.AddWithValue("@Date", message.TimeStamp);
-            cmd.ExecuteNonQuery();
-          }
+      if (message.Level == ELogLvl.TRACE && App.Conf.Verbose)
+        Console.WriteLine(message);
     }
 
     public void SysLog(string message, ELogLvl level = ELogLvl.INFO, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0) {
       if (level < LogLevel)
         return;
-      _messagesBackLog.Enqueue(new Message(message, level, User.getSystem().Id, filePath, lineNumber));
+      var m = new Message(message, level, User.getSystem().Id, filePath, lineNumber);
+      _messagesBackLog.Enqueue(m);
+      if (level == ELogLvl.TRACE && App.Conf.Verbose)
+        Console.WriteLine(m);
     }
 
     public void SysLog(Message message) {
@@ -95,6 +103,8 @@ namespace car.Logging {
         return;
       message.UserId = User.getSystem().Id;
       _messagesBackLog.Enqueue(message);
+      if (message.Level == ELogLvl.TRACE && App.Conf.Verbose)
+        Console.WriteLine(message);
     }
   }
 }

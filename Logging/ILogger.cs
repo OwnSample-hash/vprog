@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 namespace car.Logging {
-  public interface ILogger {
+  public interface ILogger : IDisposable {
     void Log(string message, ELogLvl level = ELogLvl.INFO,
       [CallerFilePath] string filePath = "",
       [CallerLineNumber] int lineNumber = 0);
