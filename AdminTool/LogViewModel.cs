@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 
 namespace car.AdminTool {
-  class LogViewModel : INotifyPropertyChanged {
+  public class LogViewModel : INotifyPropertyChanged {
 
     public ObservableCollection<LogsView> Logs { get; set; } = [];
 

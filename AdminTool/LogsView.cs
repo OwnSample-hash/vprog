@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace car.AdminTool {
-  class LogsView {
+  public class LogsView {
 
     [Key]
     public int Id { get; set; } = 0;

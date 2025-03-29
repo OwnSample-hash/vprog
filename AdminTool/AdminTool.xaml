@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:car.AdminTool"
         mc:Ignorable="d"
         Title="AdminTool" Height="720" Width="1280" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
@@ -13,20 +16,35 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"/>
             <ColumnDefinition Width="640"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserSortColumns="True"
+        <DataGrid ItemsSource="{Binding LogViewModel.Logs}" AutoGenerateColumns="False" CanUserSortColumns="True"
           CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column"
-          VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+          VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="25" />
                 <DataGridTextColumn Header="User" Binding="{Binding User}" Width="75" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="225*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="175*"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="75"/>
                 <DataGridTextColumn Header="Source" Binding="{Binding SL}" Width="225"  Visibility="Collapsed" x:Name="Source"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="100"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="35*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="UsersDG" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding Users}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" IsReadOnly="False" HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding User.Id}" Width="25" IsReadOnly="True" />
+                <DataGridTextColumn Header="User" Binding="{Binding Username}" Width="150*"/>
+                <DataGridTemplateColumn Header="Permission" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.Permissions, RelativeSource={RelativeSource AncestorType=Window}}"
+                                      SelectedItem="{Binding SelectedPerm, Mode=TwoWay}"
+                                      IsEnabled="{Binding IsEditable}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="100" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
