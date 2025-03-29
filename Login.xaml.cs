@@ -20,6 +20,7 @@ namespace car {
           MessageBox.Show("Hiba történt!");
           break;
       }
+      tbNev.Focus();
     }
 
     private void btnLogin_Click(object sender, RoutedEventArgs e) {
@@ -27,6 +28,12 @@ namespace car {
         DialogResult = true;
       } else {
         MessageBox.Show("A mezőket ki kell tölteni!");
+      }
+    }
+
+    private void pbJelszo_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
+      if (e.Key == System.Windows.Input.Key.Enter) {
+        btnLogin_Click(sender, e);
       }
     }
   }
