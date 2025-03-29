@@ -3,17 +3,21 @@
 namespace car {
 
   public class User {
+
     public int Id { get; set; } = 0;
+
     public string Username { get; set; } = "";
 
     public string Password { get; set; } = "";
 
-    public ESessionType Permission { get; private set; } = ESessionType.User;
+    public ESessionType Permission { get; set; } = ESessionType.User;
 
     public int PermissionId {
       get => (int)this.Permission;
       set => this.Permission = (ESessionType)value;
     }
+
+    public decimal Balance { get; set; } = 0;
 
     public static User getEmpty() {
       return new User {

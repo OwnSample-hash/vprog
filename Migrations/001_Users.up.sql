@@ -3,6 +3,7 @@ CREATE TABLE Users (
   Username VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,
   PermissionId integer NOT NULL DEFAULT 1
-	CONSTRAINT Users_Permissions_ID_fk
-		REFERENCES Permissions
+    CONSTRAINT Users_Permissions_ID_fk
+        REFERENCES Permissions,
+  Balance DECIMAL(18,2) NOT NULL DEFAULT 0
 );
