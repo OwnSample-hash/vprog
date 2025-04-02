@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:car"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Login" Height="450" Width="800" ResizeMode="NoResize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Style="{StaticResource MaterialDesignWindow}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -30,7 +32,7 @@ HorizontalAlignment="Right" FontSize="25" FontWeight="Bold"
 FontFamily="Times New Roman"/>
         <PasswordBox x:Name="pbJelszo" Grid.Row="2" Grid.Column="2" Margin="30,0,30,0"
   Height="30" KeyDown="pbJelszo_KeyDown"/>
-        <Button x:Name="btnLogin" FontSize="30" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="4" Margin="150,20,150,20"
+        <Button x:Name="btnLogin" FontSize="20" FontFamily="Times New Roman" Grid.ColumnSpan="2" Grid.Row="4" Margin="300,30,300,30"
          Content="Bejelentkezés" Click="btnLogin_Click"/>
 
     </Grid>

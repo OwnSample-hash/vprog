@@ -15,6 +15,8 @@ namespace car.AdminTool {
       }
     }
 
+    public bool IsEditable { get => !IsReadOnly; }
+
     public ESessionType SelectedPerm {
       get => User.Permission;
       set {

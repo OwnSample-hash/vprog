@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:car.AdminTool"
         mc:Ignorable="d"
-        Title="AdminTool" Height="720" Width="1280" ResizeMode="NoResize">
+        Title="AdminTool" Height="720" Width="1280" ResizeMode="NoResize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Style="{StaticResource MaterialDesignWindow}">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
@@ -24,10 +26,10 @@
           VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="25" />
-                <DataGridTextColumn Header="User" Binding="{Binding User}" Width="75" />
+                <DataGridTextColumn Header="User" Binding="{Binding User}" Width="100" />
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="175*"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="75"/>
-                <DataGridTextColumn Header="Source" Binding="{Binding SL}" Width="225"  Visibility="Collapsed" x:Name="Source"/>
+                <DataGridTextColumn Header="Source" Binding="{Binding SL}" Width="225" Visibility="Collapsed" x:Name="Source"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="35*"/>
             </DataGrid.Columns>
         </DataGrid>
