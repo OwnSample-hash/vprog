@@ -8,7 +8,7 @@ namespace car.Logging {
 
     public bool Ready { get; private set; }
 
-    private readonly TimeSpan delay = TimeSpan.FromSeconds(5);
+    private readonly TimeSpan delay = TimeSpan.FromSeconds(2);
 
     private readonly SqlConnection _connection = new(MainWindow.conString);
 
@@ -43,6 +43,10 @@ namespace car.Logging {
           lock (_messagesBackLog)
             while (_messagesBackLog.Count > 0)
               if (_messagesBackLog.TryDequeue(out var message)) {
+                if (message == null) {
+                  Console.WriteLine("Dequeued message is null how?");
+                  continue;
+                }
                 var cmd = new SqlCommand("INSERT INTO Logs (Description, UserId, LevelId, Source, Line, Date) VALUES (@Description, @UserId, @LevelId, @Source, @Line, @Date)", _connection);
                 cmd.Parameters.AddWithValue("@Description", message.Description);
                 cmd.Parameters.AddWithValue("@UserId", message.UserId);

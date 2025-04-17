@@ -2,6 +2,9 @@
 
 namespace car.Logging {
   public interface ILogger : IDisposable {
+
+    ELogLvl LogLevel { get; set; }
+
     void Log(string message, ELogLvl level = ELogLvl.INFO,
       [CallerFilePath] string filePath = "",
       [CallerLineNumber] int lineNumber = 0);
