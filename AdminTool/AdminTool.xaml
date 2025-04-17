@@ -11,6 +11,9 @@
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
@@ -21,13 +24,18 @@
             <ColumnDefinition Width="640"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Menu>
+            <MenuItem Header="_File">
+                <MenuItem Header="_Quit" x:Name="quit" Click="quit_Click" InputGestureText="Ctrl+Q" Icon="{materialDesign:PackIcon  Kind=ExitToApp}"/>
+            </MenuItem>
+        </Menu>
         <DataGrid ItemsSource="{Binding LogViewModel.Logs}" AutoGenerateColumns="False" CanUserSortColumns="True"
           CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column"
           VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="25" />
                 <DataGridTextColumn Header="User" Binding="{Binding User}" Width="100" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="175*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="150*"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="75"/>
                 <DataGridTextColumn Header="Source" Binding="{Binding SL}" Width="225" Visibility="Collapsed" x:Name="Source"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="35*"/>
@@ -49,5 +57,8 @@
                 <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="100" />
             </DataGrid.Columns>
         </DataGrid>
+        <ComboBox Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding DataContext.LogLevels, RelativeSource={RelativeSource AncestorType=Window}}"
+                  SelectedItem="{Binding ELogLvl, Mode=TwoWay}" Margin="100"/>
     </Grid>
 </Window>

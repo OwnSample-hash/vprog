@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Microsoft.Xaml.Behaviors.Core;
 
 namespace car.AdminTool {
   public class MainViewModel {
@@ -8,6 +10,10 @@ namespace car.AdminTool {
 
     public static Array Permissions { get => Enum.GetValues(typeof(Session.ESessionType)); }
 
+    public static Array LogLevels { get => Enum.GetValues(typeof(Logging.ELogLvl)); }
+
+    public static Logging.ELogLvl ELogLvl { get => MainWindow.Logger.LogLevel; set => MainWindow.Logger.LogLevel = value; }
+
     public bool ShouldRefresh { get => Users.Any((e) => e.Modified); }
 
     public MainViewModel() {
@@ -16,6 +22,13 @@ namespace car.AdminTool {
 
     public void AddUser(User user) {
       Users.Add(new(user, user.Id == 0));
+    }
+
+    private ActionCommand quitCommand;
+    public ICommand QuitCommand => quitCommand ??= new ActionCommand(Quit);
+
+    private void Quit() {
+      App.Current.Shutdown();
     }
   }
 }
