@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows;
 using car.DebugUtily;
 using car.Logging;
-
+using car.Picture;
 namespace car;
 
 /// <summary>
@@ -17,9 +17,12 @@ public partial class MainWindow : Window {
 
   public static bool Verbose = Environment.GetCommandLineArgs().Any((e) => e == "--verbose") || App.Conf.Verbose;
 
+  public static CacheManager CM = new("Picture");
+
   public MainWindow() {
     bool SkipDown = false;
     if (Verbose) {
+      Logger.LogLevel = ELogLvl.TRACE;
       AllocConsoleOnVerbose.DoAllocConsoleOnVerbose();
       int tries = 0;
       while (!ShiftHoldBypassDown.IsShiftDown() && tries != 10) {
@@ -56,6 +59,7 @@ public partial class MainWindow : Window {
         DebugUtily.AllocConsoleOnVerbose.DoFreeConsole();
       }
       Logger.Dispose();
+      CM.Dispose();
     };
   }
 }
