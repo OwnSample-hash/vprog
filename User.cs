@@ -1,4 +1,4 @@
-﻿using car.Session;
+﻿using car.Pages.Session;
 
 namespace car {
 
@@ -18,6 +18,10 @@ namespace car {
     }
 
     public decimal Balance { get; set; } = 0;
+
+    public override string ToString() {
+      return $"{Id} {Username} {Permission} {PermissionId} {Balance}";
+    }
 
     public static User getEmpty() {
       return new User {

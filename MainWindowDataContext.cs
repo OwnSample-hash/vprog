@@ -1,0 +1,36 @@
+﻿using System.ComponentModel;
+using System.Windows;
+using car.Pages.Session;
+
+namespace car {
+  public class MainWindowDataContext {
+
+    public IsAdminVis AdminVisibility { get; } = new();
+
+    public IsSellerVis SellerVisiblity { get; } = new();
+  }
+
+  public class IsAdminVis : INotifyPropertyChanged {
+    private bool IsAdmin => Session.User.Permission == ESessionType.Admin;
+    public Visibility AdminVisibility {
+      get => IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged(string propertyName) {
+      MainWindow.Logger.SysLog($"Property changed: {propertyName}", Logging.ELogLvl.TRACE);
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+  }
+
+  public class IsSellerVis : INotifyPropertyChanged {
+    private bool IsSeller => Session.User.Permission == ESessionType.Seller || Session.User.Permission == ESessionType.Admin;
+    public Visibility SellerVisibility {
+      get => IsSeller ? Visibility.Visible : Visibility.Collapsed;
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged(string propertyName) {
+      MainWindow.Logger.SysLog($"Property changed: {propertyName}", Logging.ELogLvl.TRACE);
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+  }
+}

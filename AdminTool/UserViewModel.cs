@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using car.Session;
+using car.Pages.Session;
 
 namespace car.AdminTool {
   public class UserViewModel : INotifyPropertyChanged {
@@ -20,11 +20,11 @@ namespace car.AdminTool {
     public ESessionType SelectedPerm {
       get => User.Permission;
       set {
-        if (IsReadOnly || Session.Session.User.Id == User.Id || value == ESessionType.System) {
+        if (IsReadOnly || Session.User.Id == User.Id || value == ESessionType.System) {
           OnPropertyChanged(nameof(User.Permission));
           return;
         }
-        MainWindow.Logger.Log($"User {Session.Session.User.Username} changed {User.Username}'s permission from {User.Permission} to {value}");
+        MainWindow.Logger.Log($"User {Session.User.Username} changed {User.Username}'s permission from {User.Permission} to {value}");
         User.Permission = value;
         OnPropertyChanged(nameof(User.Permission));
         Modified = true;
@@ -38,7 +38,7 @@ namespace car.AdminTool {
           OnPropertyChanged(nameof(User.Username));
           return;
         }
-        MainWindow.Logger.Log($"User {Session.Session.User.Username} changed {User.Username}'s username to {value}");
+        MainWindow.Logger.Log($"User {Session.User.Username} changed {User.Username}'s username to {value}");
         User.Username = value;
         OnPropertyChanged(nameof(User.Username));
         Modified = true;
@@ -52,7 +52,7 @@ namespace car.AdminTool {
           OnPropertyChanged(nameof(User.Balance));
           return;
         }
-        MainWindow.Logger.Log($"User {Session.Session.User.Username} changed {User.Username}'s balance to {value}");
+        MainWindow.Logger.Log($"User {Session.User.Username} changed {User.Username}'s balance to {value}");
         User.Balance = value;
         OnPropertyChanged(nameof(User.Balance));
         Modified = true;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using car.Pages.Session;
 using Microsoft.Xaml.Behaviors.Core;
 
 namespace car.AdminTool {
@@ -8,7 +9,7 @@ namespace car.AdminTool {
 
     public ObservableCollection<UserViewModel> Users { get; set; } = [];
 
-    public static Array Permissions { get => Enum.GetValues(typeof(Session.ESessionType)); }
+    public static Array Permissions { get => Enum.GetValues(typeof(ESessionType)); }
 
     public static Array LogLevels { get => Enum.GetValues(typeof(Logging.ELogLvl)); }
 
@@ -24,10 +25,10 @@ namespace car.AdminTool {
       Users.Add(new(user, user.Id == 0));
     }
 
-    private ActionCommand quitCommand;
-    public ICommand QuitCommand => quitCommand ??= new ActionCommand(Quit);
+    private ActionCommand quitCommand = new ActionCommand(Quit);
+    public ICommand QuitCommand => quitCommand;
 
-    private void Quit() {
+    private static void Quit() {
       App.Current.Shutdown();
     }
   }

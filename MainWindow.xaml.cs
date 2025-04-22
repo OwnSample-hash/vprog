@@ -1,9 +1,8 @@
-﻿using System.IO;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using car.DebugUtily;
 using car.Logging;
 using car.Picture;
+
 namespace car;
 
 /// <summary>
@@ -36,6 +35,21 @@ public partial class MainWindow : Window {
       }
     }
     InitializeComponent();
+    MainWindowDataContext mainWindowDataContext = new();
+    DataContext = mainWindowDataContext;
+
+    Pages.Session.Session.LoginEvent += () => {
+      Logger.SysLog("Login event triggered", ELogLvl.TRACE);
+      mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
+      mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
+    };
+
+    Pages.Session.Session.LogoutEvent += () => {
+      Logger.SysLog("Logout event triggered", ELogLvl.TRACE);
+      mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
+      mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
+    };
+
     var args = Environment.GetCommandLineArgs();
     var migration = new DB.MigrationManager(conString, Verbose);
     if (args.Length > 1 && args.Any((e) => e == "--migrate")) {
@@ -46,7 +60,6 @@ public partial class MainWindow : Window {
       }
     }
     if (args.Length > 1 && args.Any((e) => e == "--seed")) {
-      var conString = File.ReadAllText("connectionString.txt", Encoding.UTF8);
       if (migration.Seed()) {
         Logger.SysLog("Seed completed!");
       } else {
@@ -56,10 +69,19 @@ public partial class MainWindow : Window {
     this.Closed += (_, _) => {
       Logger.SysLog("Closing MainWindow", ELogLvl.DEBUG);
       if (Verbose) {
-        DebugUtily.AllocConsoleOnVerbose.DoFreeConsole();
+        AllocConsoleOnVerbose.DoFreeConsole();
       }
       Logger.Dispose();
       CM.Dispose();
+      Environment.Exit(0);
     };
+  }
+
+  private void miAdmin_Click(object sender, RoutedEventArgs e) {
+    new AdminTool.AdminTool().Show();
+  }
+
+  private void miSeller_Click(object sender, RoutedEventArgs e) {
+
   }
 }

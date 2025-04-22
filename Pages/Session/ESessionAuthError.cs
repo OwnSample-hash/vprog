@@ -1,4 +1,4 @@
-﻿namespace car.Session {
+﻿namespace car.Pages.Session {
   public enum ESessionAuthError {
     GeneralError = -1,
     OK = 0,

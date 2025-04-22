@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using car.Pages.Session;
 using Microsoft.Data.SqlClient;
 
 namespace car.Logging {
@@ -78,7 +79,7 @@ namespace car.Logging {
       [CallerLineNumber] int lineNumber = 0) {
       if (eLogLvl < LogLevel)
         return;
-      var m = new Message(message, eLogLvl, Session.Session.User.Id, filePath, lineNumber);
+      var m = new Message(message, eLogLvl, Session.User.Id, filePath, lineNumber);
       _messagesBackLog.Enqueue(m);
       if (eLogLvl == ELogLvl.TRACE && App.Conf.Verbose)
         Console.WriteLine(m);
@@ -87,7 +88,7 @@ namespace car.Logging {
     public void Log(Message message) {
       if (message.Level < LogLevel)
         return;
-      message.UserId = Session.Session.User.Id;
+      message.UserId = Session.User.Id;
       _messagesBackLog.Enqueue(message);
       if (message.Level == ELogLvl.TRACE && App.Conf.Verbose)
         Console.WriteLine(message);

@@ -103,7 +103,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Themes\" />
+    <Folder Include="Pages\Slider\" />
     <Folder Include="Seeds\" />
   </ItemGroup>
 
@@ -112,7 +112,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Themes\Generic.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="R:\car\.editorconfig" />
+    <None Include="Themes\Generic.xaml" />
   </ItemGroup>
 
 </Project>
