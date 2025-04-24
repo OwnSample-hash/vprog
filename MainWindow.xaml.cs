@@ -76,12 +76,4 @@ public partial class MainWindow : Window {
       Environment.Exit(0);
     };
   }
-
-  private void miAdmin_Click(object sender, RoutedEventArgs e) {
-    new AdminTool.AdminTool().Show();
-  }
-
-  private void miSeller_Click(object sender, RoutedEventArgs e) {
-
-  }
 }

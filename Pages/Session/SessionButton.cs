@@ -20,7 +20,7 @@ namespace car.Pages.Session {
     public static event LoginEventHandler? LogoutEvent;
 
     public void Login(object sender, RoutedEventArgs e) {
-      var login = new Login(_eSessionAuthError);
+      var login = new Login.Login(_eSessionAuthError);
       if (login.ShowDialog() == true) {
         var user = _connection.Query<User>
           ("SELECT * FROM Users WHERE Username = @Username", new { login.Username }).FirstOrDefault();

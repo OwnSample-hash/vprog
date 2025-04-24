@@ -10,36 +10,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{StaticResource MaterialDesignWindow}"
         >
-    <Window.DataContext>
-        <local:MainWindowDataContext />
-    </Window.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160" />
-            <ColumnDefinition Width="960*" />
-            <ColumnDefinition Width="160" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
+    <Frame Source="/Pages/Main/Main.xaml">
         
-        <Menu>
-            <MenuItem Header="File">
-                <MenuItem Header="Test1" />
-            </MenuItem>
-
-            <MenuItem Header="Seller" Visibility="{Binding SellerVisiblity.SellerVisibility, Mode=OneWay}" x:Name="miSeller" Click="miSeller_Click" />
-
-            <MenuItem Header="Admin" Visibility="{Binding AdminVisibility.AdminVisibility, Mode=OneWay}" x:Name="miAdmin" Click="miAdmin_Click"/>
-
-        </Menu>
-        
-        <Label Content="Autóskereskedés" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
-            FontSize="32" FontWeight="Bold"/>
-
-        <Frame Grid.Column="2" Grid.Row="0" Source="/Pages/Session/Session.xaml" />
-    </Grid>
+    </Frame>
 </Window>
 
