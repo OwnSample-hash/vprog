@@ -15,6 +15,7 @@ namespace car.Pages.Login {
     public bool DialogResult { get; private set; } = false;
 
     public Login(ESessionAuthError eSessionAuthError = ESessionAuthError.OK) {
+      throw new NotImplementedException("Todo finish it");
       InitializeComponent();
       switch (eSessionAuthError) {
         case ESessionAuthError.InvalidCredentials:
