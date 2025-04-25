@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using car.Pages.Session;
+using Dapper;
+using Microsoft.Data.SqlClient;
+using BC = BCrypt.Net.BCrypt;
 
 namespace car.Pages.Login {
   /// <summary>
@@ -8,29 +10,32 @@ namespace car.Pages.Login {
   /// </summary>
   public sealed partial class Login : Page {
 
-    public string Username { get => tbNev.Text; }
+    private readonly SqlConnection _connection = new(MainWindow.conString);
 
-    public string Password { get => pbJelszo.Password; }
+    private Action<User, bool> _storeUser;
 
-    public bool DialogResult { get; private set; } = false;
-
-    public Login(ESessionAuthError eSessionAuthError = ESessionAuthError.OK) {
-      throw new NotImplementedException("Todo finish it");
+    public Login(Action<User, bool> storeUser) {
       InitializeComponent();
-      switch (eSessionAuthError) {
-        case ESessionAuthError.InvalidCredentials:
-          MessageBox.Show("Hibás felhasználónév vagy jelszó!");
-          break;
-        case ESessionAuthError.GeneralError:
-          MessageBox.Show("Hiba történt!");
-          break;
-      }
+      this.KeepAlive = false;
+      _storeUser = storeUser;
       tbNev.Focus();
     }
 
     private void btnLogin_Click(object sender, RoutedEventArgs e) {
+      // TODO: Add error handling/logging
       if (tbNev.Text != "" && pbJelszo.Password != "") {
-        DialogResult = true;
+        var user = _connection.Query<User>
+          ("SELECT * FROM Users WHERE Username = @Username", new { Username = tbNev.Text }).FirstOrDefault();
+        if (user == null) {
+          return;
+        }
+        if (BC.Verify(pbJelszo.Password, user.Password)) {
+          _storeUser(user, true);
+          return;
+        } else {
+          _storeUser(User.getEmpty(), false);
+          return;
+        }
       } else {
         MessageBox.Show("A mezőket ki kell tölteni!");
       }
@@ -42,14 +47,9 @@ namespace car.Pages.Login {
       }
     }
 
-    public bool ShowDialog() {
-      throw new NotImplementedException("Todo fhinish it");
-      //var result = Show();
-      //if (result == true) {
-      //  return true;
-      //} else {
-      //  return false;
-      //}
+    private void btnCancel_Click(object sender, RoutedEventArgs e) {
+      MainWindow.MainPage.NavigationService?.GoBack();
+      MainWindow.MainPage.NavigationService?.RemoveBackEntry();
     }
   }
 }

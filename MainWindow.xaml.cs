@@ -18,6 +18,8 @@ public partial class MainWindow : Window {
 
   public static CacheManager CM = new("Picture");
 
+  public static System.Windows.Controls.Frame MainPage { get; private set; } = null!;
+
   public MainWindow() {
     bool SkipDown = false;
     if (Verbose) {
@@ -35,20 +37,7 @@ public partial class MainWindow : Window {
       }
     }
     InitializeComponent();
-    MainWindowDataContext mainWindowDataContext = new();
-    DataContext = mainWindowDataContext;
-
-    Pages.Session.Session.LoginEvent += () => {
-      Logger.SysLog("Login event triggered", ELogLvl.TRACE);
-      mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
-      mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
-    };
-
-    Pages.Session.Session.LogoutEvent += () => {
-      Logger.SysLog("Logout event triggered", ELogLvl.TRACE);
-      mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
-      mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
-    };
+    MainPage = frMain;
 
     var args = Environment.GetCommandLineArgs();
     var migration = new DB.MigrationManager(conString, Verbose);

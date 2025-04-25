@@ -4,13 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:car.Pages.Main"
+      xmlns:session="clr-namespace:car.Pages.Session"
       xmlns:root="clr-namespace:car"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Main">
+      Title="Main"
+      >
 
     <Page.DataContext>
-        <root:MainWindowDataContext />
+        <local:MainWindowDataContext />
     </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,13 +28,10 @@
 
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="Test1" />
+                <MenuItem Header="Seller" Visibility="{Binding SellerVisiblity.SellerVisibility, Mode=OneWay}" x:Name="miSeller" Click="miSeller_Click" />
+
+                <MenuItem Header="Admin" Visibility="{Binding AdminVisibility.AdminVisibility, Mode=OneWay}" x:Name="miAdmin" Click="miAdmin_Click" />
             </MenuItem>
-
-            <MenuItem Header="Seller" Visibility="{Binding SellerVisiblity.SellerVisibility, Mode=OneWay}" x:Name="miSeller" Click="miSeller_Click" />
-
-            <MenuItem Header="Admin" Visibility="{Binding AdminVisibility.AdminVisibility, Mode=OneWay}" x:Name="miAdmin" Click="miAdmin_Click"/>
-
         </Menu>
 
         <Label Content="Autóskereskedés" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"

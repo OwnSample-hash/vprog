@@ -2,7 +2,7 @@
 using System.Windows;
 using car.Pages.Session;
 
-namespace car {
+namespace car.Pages.Main {
   public class MainWindowDataContext {
 
     public IsAdminVis AdminVisibility { get; } = new();
@@ -11,7 +11,7 @@ namespace car {
   }
 
   public class IsAdminVis : INotifyPropertyChanged {
-    private bool IsAdmin => Session.User.Permission == ESessionType.Admin;
+    private bool IsAdmin => Session.Session.User.Permission == ESessionType.Admin;
     public Visibility AdminVisibility {
       get => IsAdmin ? Visibility.Visible : Visibility.Collapsed;
     }
@@ -23,7 +23,7 @@ namespace car {
   }
 
   public class IsSellerVis : INotifyPropertyChanged {
-    private bool IsSeller => Session.User.Permission == ESessionType.Seller || Session.User.Permission == ESessionType.Admin;
+    private bool IsSeller => Session.Session.User.Permission == ESessionType.Seller || Session.Session.User.Permission == ESessionType.Admin;
     public Visibility SellerVisibility {
       get => IsSeller ? Visibility.Visible : Visibility.Collapsed;
     }
