@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http;
+using System.Windows.Media.Imaging;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
@@ -114,17 +115,17 @@ namespace car.Picture {
       }
     }
 
-    public Cache GetCache(string path) {
-      var cache = Pics.FirstOrDefault((e) => e.Path == path);
-      if (cache == null) {
-        cache = new Cache() {
-          Path = path,
-          IsCached = false,
-          LastUpdated = DateTime.Now
-        };
-        Pics.Add(cache);
-      }
-      return cache;
+    public List<BitmapImage> GetPicsByCarId(int CarId) {
+      var pics = Pics.Where((e) => e.Pic.CarId == CarId && e.IsCached).Select((e) => {
+        var image = new BitmapImage();
+        image.BeginInit();
+        image.UriSource = new Uri(e.Path);
+        image.CacheOption = BitmapCacheOption.OnLoad;
+        image.EndInit();
+        image.Freeze();
+        return image;
+      }).ToList();
+      return pics;
     }
 
     public void Dispose() {
