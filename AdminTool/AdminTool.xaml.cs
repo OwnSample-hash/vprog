@@ -77,6 +77,10 @@ namespace car.AdminTool {
       LogPoller.Dispose();
     }
 
+    ~AdminTool() {
+      Dispose();
+    }
+
     private void quit_Click(object sender, RoutedEventArgs e) {
       App.Current.Shutdown();
     }
