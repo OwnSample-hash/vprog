@@ -6,12 +6,14 @@
       xmlns:local="clr-namespace:car.Pages.Seller"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
-      Title="SellerPage">
+      Title="SellerPage"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    >
 
     <Grid>
         <Menu>
             <MenuItem Header="File">
-                <MenuItem Header="Back" x:Name="miBack" Click="miBack_Click"/>
+                <MenuItem Header="Back" x:Name="miBack" Click="miBack_Click" Icon="{materialDesign:PackIcon Kind=ArrowLeft}"/>
             </MenuItem>
         </Menu>
     </Grid>
