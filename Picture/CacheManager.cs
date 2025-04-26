@@ -43,6 +43,7 @@ namespace car.Picture {
       MainWindow.Logger.SysLog("Starting Picture Caching");
       _thread.Start();
     }
+
     void Thread() {
       List<Task<Cache>> tasks = [];
       while (!_disposed) {
@@ -133,6 +134,7 @@ namespace car.Picture {
         return;
       }
       _disposed = true;
+      _thread.Join();
       File.WriteAllText(_cache, JsonConvert.SerializeObject(Pics));
     }
   }
