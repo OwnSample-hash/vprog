@@ -4,20 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:car.Pages.Main"
-      xmlns:session="clr-namespace:car.Pages.Session"
-      xmlns:root="clr-namespace:car"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Main"
-      >
+      Title="Main">
 
     <Page.DataContext>
         <local:MainWindowDataContext />
     </Page.DataContext>
+
     <Grid>
+      
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160" />
-            <ColumnDefinition Width="960*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="160" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -26,17 +25,56 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Menu>
+        
+        <Menu Grid.ColumnSpan="3">
             <MenuItem Header="File">
-                <MenuItem Header="Seller" Visibility="{Binding SellerVisiblity.SellerVisibility, Mode=OneWay}" x:Name="miSeller" Click="miSeller_Click" />
-
-                <MenuItem Header="Admin" Visibility="{Binding AdminVisibility.AdminVisibility, Mode=OneWay}" x:Name="miAdmin" Click="miAdmin_Click" />
+                <MenuItem Header="Seller" Visibility="{Binding SellerVisiblity.SellerVisibility}" Click="miSeller_Click"/>
+                <MenuItem Header="Admin"  Visibility="{Binding AdminVisibility.AdminVisibility}"  Click="miAdmin_Click"/>
             </MenuItem>
         </Menu>
 
-        <Label Content="Autóskereskedés" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
-        FontSize="32" FontWeight="Bold"/>
 
-        <Frame Grid.Column="2" Grid.Row="0" Source="/Pages/Session/Session.xaml" />
+        <Label Grid.Row="0" Grid.Column="1"
+           Content="Autóskereskedés"
+           VerticalAlignment="Center"
+           HorizontalAlignment="Center"
+           FontSize="32" FontWeight="Bold"/>
+
+        <Frame Grid.Row="0" Grid.Column="2"
+           Source="/Pages/Session/Session.xaml" />
+
+       
+        <ListBox x:Name="CatalogList"
+             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+             ItemsSource="{Binding Pictures}"
+             BorderThickness="0"
+             SelectionMode="Single">
+            
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding DataContext.NavigateToDetailCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                  CommandParameter="{Binding}">
+                        <StackPanel Width="200" Height="150" Margin="8">
+                            <Image Source="{Binding Image}"         
+                                Stretch="UniformToFill"
+                     Height="100"/>
+                                <TextBlock Text="{Binding Url}"         
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Center"/>
+            </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+            <TextBlock Text="© 2025 Autóskereskedés" />
+        </StatusBar>
     </Grid>
 </Page>

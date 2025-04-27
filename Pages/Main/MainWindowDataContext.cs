@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using car.models;
 using car.Pages.Session;
 
 namespace car.Pages.Main {
@@ -8,7 +9,13 @@ namespace car.Pages.Main {
     public IsAdminVis AdminVisibility { get; } = new();
 
     public IsSellerVis SellerVisiblity { get; } = new();
+
+    public List<Car> cars { get; set; } = new();
+   
+
   }
+
+
 
   public class IsAdminVis : INotifyPropertyChanged {
     private bool IsAdmin => Session.Session.User.Permission == ESessionType.Admin;

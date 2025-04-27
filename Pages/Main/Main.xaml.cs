@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using car.Logging;
+using car.models;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace car.Pages.Main {
   /// <summary>
@@ -10,11 +13,15 @@ namespace car.Pages.Main {
 
     public MainWindowDataContext mainWindowDataContext { get; private set; } = null!;
 
+    private SqlConnection SqlConnection = new(MainWindow.conString);
+
     public Main() {
       InitializeComponent();
       KeepAlive = true;
       MainWindowDataContext mainWindowDataContext = new();
       DataContext = mainWindowDataContext;
+
+      mainWindowDataContext.cars = SqlConnection.Query<List<Car>>("select * from cars").ToList();
 
       Pages.Session.Session.LoginEvent += () => {
         MainWindow.Logger.SysLog("Login event triggered", ELogLvl.TRACE);
