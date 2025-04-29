@@ -45,7 +45,7 @@
 
         <ListBox x:Name="CatalogList"
              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-             ItemsSource="{Binding cars}"
+             ItemsSource="{Binding cars.cars}"
              BorderThickness="0"
              SelectionMode="Single">
               
@@ -57,12 +57,13 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button>
-                        <StackPanel Width="500" Height="300" Margin="8">
+                    <Button Width="250" Height="175">
+                        <StackPanel  Margin="8">
                             <Image Source="{Binding Pics[0]}" Stretch="UniformToFill"/>
                             <TextBlock Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Button>
+                    <PresentationTraceSources.TraceLevel>High</PresentationTraceSources.TraceLevel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -23,7 +23,7 @@ namespace car.Pages.Main {
 
       var cars = SqlConnection.Query<Car>("select * from Cars").ToList();
       cars.ForEach((c) => MainWindow.Logger.SysLog($"Got {c.Name} for {c.Price}", ELogLvl.TRACE));
-      mainWindowDataContext.cars = [.. cars];
+      mainWindowDataContext.cars.cars = [.. cars];
 
       Pages.Session.Session.LoginEvent += () => {
         MainWindow.Logger.SysLog("Login event triggered", ELogLvl.TRACE);

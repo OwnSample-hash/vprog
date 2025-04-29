@@ -10,7 +10,26 @@ namespace car.Pages.Main {
 
     public IsSellerVis SellerVisiblity { get; } = new();
 
-    public List<Car> cars { get; set; } = [];
+    public CarNPC cars { get; set; } = new();
+  }
+
+  public class CarNPC : INotifyPropertyChanged {
+
+    List<Car> _cars = new();
+
+    public List<Car> cars {
+      get => _cars; set {
+        _cars = value;
+        OnPropertyChanged(nameof(cars));
+      }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged(string propertyName) {
+      MainWindow.Logger.SysLog($"Property changed: {propertyName}", Logging.ELogLvl.TRACE);
+      MainWindow.Logger.SysLog($"Callbacks: {PropertyChanged?.GetInvocationList().Length}", Logging.ELogLvl.TRACE);
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
   }
 
   public class IsAdminVis : INotifyPropertyChanged {
