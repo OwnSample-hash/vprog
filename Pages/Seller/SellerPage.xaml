@@ -11,10 +11,69 @@
     >
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Menu>
-            <MenuItem Header="File">
-                <MenuItem Header="Back" x:Name="miBack" Click="miBack_Click" Icon="{materialDesign:PackIcon Kind=ArrowLeft}"/>
-            </MenuItem>
+            <MenuItem Header="Back" x:Name="miBack" Click="miBack_Click" Icon="{materialDesign:PackIcon Kind=ArrowLeft}"/>
         </Menu>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
+            <Label Content="Új autó" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Név:" FontSize="24" FontWeight="Bold" Margin="100,30"/>
+                <TextBox x:Name="NewCarName" Text="Új kocsi neve" Foreground="White" Margin="30,30" FontSize="20" Grid.Column="1" HorizontalAlignment="Stretch" SpellCheck.IsEnabled="True"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Ár:" FontSize="24" FontWeight="Bold" Margin="100,30"/>
+                <materialDesign:NumericUpDown x:Name="NewCarPrice" Foreground="White" Margin="30,30" FontSize="20" HorizontalAlignment="Stretch" Grid.Column="1"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Leírás:" FontSize="24" FontWeight="Bold" Margin="100,30"/>
+                <TextBox x:Name="NewCarDesc" Foreground="White" Margin="30,30" FontSize="20" HorizontalAlignment="Stretch" Grid.Column="1" AcceptsReturn="True" TextWrapping="Wrap" SpellCheck.IsEnabled="True"/>
+            </Grid>
+            <Label Content="Id: " FontSize="24" FontWeight="Bold" Margin="100,30" Visibility="Collapsed" x:Name="NewCarId"/>
+            <Button Content="Hozzá adás!" Margin="250,30"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <Label Content="Új kép" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" />
+            <Image x:Name="Preview" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Kép elérési út:" FontWeight="Bold" FontSize="24" Margin="30,30,30,30" />
+                <TextBox x:Name="ImagePath" FontSize="20" Margin="30,30" Text="Url a képhez" Foreground="White" Padding="3" Grid.Column="1"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Kocsi azonosítója" FontWeight="Bold" FontSize="24" Margin="30,30,30,30" />
+                <materialDesign:NumericUpDown x:Name="CarId" FontSize="20" Margin="30,30" Foreground="White" Padding="3" Grid.Column="1"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnImage" Content="Kép megtekíntése" Margin="100,30"/>
+                <Button x:Name="btnConf" Content="Kép feltöltése" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

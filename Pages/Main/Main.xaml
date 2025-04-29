@@ -59,7 +59,14 @@
                 <DataTemplate>
                     <Button Width="250" Height="175" Click="Button_Click">
                         <StackPanel Margin="8">
-                            <Label Content="{Binding Id}" Visibility="Collapsed"/>
+                            <Grid Visibility="{Binding DataContext.SellerVisiblity.SellerVisibility , RelativeSource={RelativeSource AncestorType=Page}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Azonosító:" Foreground="Black"/>
+                                <Label Content="{Binding Id}" Foreground="Black" Grid.Column="1"/>
+                            </Grid>
                             <Image Source="{Binding Pics[0]}" Stretch="UniformToFill"/>
                             <TextBlock Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>
