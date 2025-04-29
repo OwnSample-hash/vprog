@@ -10,12 +10,8 @@ namespace car.Pages.Main {
 
     public IsSellerVis SellerVisiblity { get; } = new();
 
-    public List<Car> cars { get; set; } = new();
-   
-
+    public List<Car> cars { get; set; } = [];
   }
-
-
 
   public class IsAdminVis : INotifyPropertyChanged {
     private bool IsAdmin => Session.Session.User.Permission == ESessionType.Admin;

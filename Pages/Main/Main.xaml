@@ -43,13 +43,12 @@
         <Frame Grid.Row="0" Grid.Column="2"
            Source="/Pages/Session/Session.xaml" />
 
-       
         <ListBox x:Name="CatalogList"
              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-             ItemsSource="{Binding Pictures}"
+             ItemsSource="{Binding cars}"
              BorderThickness="0"
              SelectionMode="Single">
-            
+              
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -58,16 +57,11 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding DataContext.NavigateToDetailCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                  CommandParameter="{Binding}">
-                        <StackPanel Width="200" Height="150" Margin="8">
-                            <Image Source="{Binding Image}"         
-                                Stretch="UniformToFill"
-                     Height="100"/>
-                                <TextBlock Text="{Binding Url}"         
-                         TextWrapping="Wrap"
-                         HorizontalAlignment="Center"/>
-            </StackPanel>
+                    <Button>
+                        <StackPanel Width="500" Height="300" Margin="8">
+                            <Image Source="{Binding Pics[0]}" Stretch="UniformToFill"/>
+                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                        </StackPanel>
                     </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>

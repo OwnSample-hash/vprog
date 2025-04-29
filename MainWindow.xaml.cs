@@ -2,7 +2,6 @@
 using car.DebugUtily;
 using car.Logging;
 using car.Picture;
-using Microsoft.Data.SqlClient;
 
 namespace car;
 
@@ -19,7 +18,6 @@ public partial class MainWindow : Window {
 
   public static CacheManager CM = new("Picture");
 
-  
   public static System.Windows.Controls.Frame MainPage { get; private set; } = null!;
 
   public MainWindow() {
