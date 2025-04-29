@@ -103,7 +103,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Slider\" />
     <Folder Include="Seeds\" />
   </ItemGroup>
 
