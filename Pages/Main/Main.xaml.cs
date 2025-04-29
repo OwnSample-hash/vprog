@@ -15,31 +15,45 @@ namespace car.Pages.Main {
 
     private SqlConnection SqlConnection = new(MainWindow.conString);
 
+    AdminTool.AdminTool? adminTool = null;
+
     public Main() {
       InitializeComponent();
       KeepAlive = true;
       MainWindowDataContext mainWindowDataContext = new();
       DataContext = mainWindowDataContext;
 
-      var cars = SqlConnection.Query<Car>("select * from Cars").ToList();
+      var cars = SqlConnection.Query<Car>("SELECT * FROM Cars").ToList();
       cars.ForEach((c) => MainWindow.Logger.SysLog($"Got {c.Name} for {c.Price}", ELogLvl.TRACE));
       mainWindowDataContext.cars.cars = [.. cars];
 
-      Pages.Session.Session.LoginEvent += () => {
+      Session.Session.LoginEvent += () => {
         MainWindow.Logger.SysLog("Login event triggered", ELogLvl.TRACE);
         mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
         mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
       };
 
-      Pages.Session.Session.LogoutEvent += () => {
+      Session.Session.LogoutEvent += () => {
         MainWindow.Logger.SysLog("Logout event triggered", ELogLvl.TRACE);
+        if (adminTool != null) {
+          MainWindow.Logger.SysLog("Closing admin tool", ELogLvl.TRACE);
+          adminTool.Close();
+          adminTool.Dispose();
+          adminTool = null;
+        }
         mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
         mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
       };
     }
 
     private void miAdmin_Click(object sender, RoutedEventArgs e) {
-      new AdminTool.AdminTool().Show();
+      if (adminTool != null) {
+        MainWindow.Logger.SysLog("Admin tool already open", ELogLvl.TRACE);
+        adminTool.Focus();
+        return;
+      }
+      adminTool = new AdminTool.AdminTool();
+      adminTool.Show();
     }
 
     private void miSeller_Click(object sender, RoutedEventArgs e) {
