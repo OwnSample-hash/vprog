@@ -112,12 +112,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="Themes\Generic.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="R:\car\.editorconfig" />
-    <None Include="Themes\Generic.xaml" />
   </ItemGroup>
 
 </Project>
