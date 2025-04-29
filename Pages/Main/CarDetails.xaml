@@ -1,0 +1,39 @@
+﻿<Page x:Class="car.Pages.Main.CarDetails"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:car.Pages.Main"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="CarDetails">
+    <Page.DataContext>
+        <local:CarDetailsDC/>
+    </Page.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="640"/>
+            <ColumnDefinition Width="640"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="360"/>
+            <RowDefinition Height="360"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="0" Source="{Binding Image1}" Stretch="UniformToFill" Margin="15"/>
+        <Image Grid.Row="1" Grid.Column="0" Source="{Binding Image2}" Stretch="UniformToFill" Margin="15"/>
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="15" Grid.RowSpan="2">
+            <Label Content="Név:" FontSize="24" FontWeight="Bold" Margin="150,30,150,0"/>
+            <Label Content="{Binding Name}" FontSize="24" FontWeight="Bold" Margin="150,00"/>
+            <Label Content="Ár:" FontSize="24" FontWeight="Bold" Margin="150,30,150,0"/>
+            <Label Content="{Binding Price}" FontSize="20" Margin="150,0"/>
+            <Label Content="Leírás:" FontSize="24" FontWeight="Bold" Margin="150,30,150,0"/>
+            <Label Content="{Binding Description}" FontSize="16" Margin="150,0" />
+            <StackPanel Orientation="Horizontal" >
+                <Button Content="Mégse" Margin="150,30" Click="Button_Click"/>
+                <Button Content="Vásárlás" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

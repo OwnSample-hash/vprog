@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using car.Logging;
-using car.models;
+using car.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
@@ -44,6 +44,15 @@ namespace car.Pages.Main {
 
     private void miSeller_Click(object sender, RoutedEventArgs e) {
       MainWindow.MainPage.NavigationService?.Navigate(new Seller.SellerPage());
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e) {
+      var button = sender as Button;
+      if (button?.DataContext is Car item) {
+        MainWindow.MainPage.NavigationService?.Navigate(new CarDetails(item));
+      } else {
+        MainWindow.Logger.SysLog("Item is null", ELogLvl.ERROR);
+      }
     }
   }
 }

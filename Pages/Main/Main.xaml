@@ -57,13 +57,13 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Width="250" Height="175">
-                        <StackPanel  Margin="8">
+                    <Button Width="250" Height="175" Click="Button_Click">
+                        <StackPanel Margin="8">
+                            <Label Content="{Binding Id}" Visibility="Collapsed"/>
                             <Image Source="{Binding Pics[0]}" Stretch="UniformToFill"/>
                             <TextBlock Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <PresentationTraceSources.TraceLevel>High</PresentationTraceSources.TraceLevel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
