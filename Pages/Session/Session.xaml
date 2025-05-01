@@ -4,17 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:car.Pages.Session"
+      xmlns:main="clr-namespace:car.Pages.Main"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="65" d:DesignWidth="250"
       Title="Session">
+    <Page.DataContext>
+        <main:MainWindowDataContext />
+    </Page.DataContext>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Hello" FontSize="18" Grid.Column="0"/>
-        <Button x:Name="btLogin" Content="Login" Click="Login" Width="75" Grid.Column="1"/>
-        <Button x:Name="btLogout" Content="Logout" Click="Logout" Visibility="Collapsed" Width="75" Grid.Column="1"/>
-    </Grid>
+    <StackPanel Orientation="Horizontal">
+        <Label Content="{Binding Status.Status}" FontSize="18" Grid.Column="0" x:Name="SessionStatus" Margin="0,0,15,0"/>
+        <Button x:Name="btLogin" Content="Login" Click="Login" Width="80" Grid.Column="1"/>
+        <Button x:Name="btLogout" Content="Logout" Click="Logout" Visibility="Collapsed" Width="80" Grid.Column="1"/>
+    </StackPanel>
 </Page>

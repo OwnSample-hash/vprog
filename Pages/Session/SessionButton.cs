@@ -4,7 +4,6 @@ using System.Windows.Controls;
 namespace car.Pages.Session {
   public partial class Session : Page {
 
-
     public static User User { get; private set; } = User.getEmpty();
 
     private ESessionAuthError _eSessionAuthError = ESessionAuthError.OK;
@@ -19,12 +18,14 @@ namespace car.Pages.Session {
       MainWindow.MainPage.NavigationService?.Navigate(new Login.Login((user, success) => {
         if (success) {
           User = user;
+          user.UserBalChangeEvent += UserBalChangeEventHandler;
           MainWindow.Logger.Log($"User {user.Username} logged in");
           btLogin.Visibility = Visibility.Collapsed;
           btLogout.Visibility = Visibility.Visible;
           LoginEvent?.Invoke();
           MainWindow.MainPage.NavigationService?.GoBack();
           MainWindow.MainPage.NavigationService?.RemoveBackEntry();
+          MWDC.Status.Status = $"Bejelentkezve {user.Username}\nEgyenleg: {user.Balance}";
         } else {
           MainWindow.Logger.Log("Login failed");
           _eSessionAuthError = ESessionAuthError.InvalidCredentials;
@@ -39,6 +40,7 @@ namespace car.Pages.Session {
       LogoutEvent?.Invoke();
       btLogin.Visibility = Visibility.Visible;
       btLogout.Visibility = Visibility.Collapsed;
+      MWDC.Status.Status = "Kérlek jelentkezz be!";
     }
   }
 }

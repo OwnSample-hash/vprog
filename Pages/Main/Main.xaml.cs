@@ -11,26 +11,39 @@ namespace car.Pages.Main {
   /// </summary>
   public partial class Main : Page {
 
-    public MainWindowDataContext mainWindowDataContext { get; private set; } = null!;
+    MainWindowDataContext MainWindowDataContext { get; set; }
 
-    private SqlConnection SqlConnection = new(MainWindow.conString);
+    static MainWindowDataContext MainWindowDataContextStatic { get; set; } = new();
+
+    static SqlConnection SqlConnection = new(MainWindow.conString);
 
     AdminTool.AdminTool? adminTool = null;
 
     public Main() {
       InitializeComponent();
       KeepAlive = true;
-      MainWindowDataContext mainWindowDataContext = new();
-      DataContext = mainWindowDataContext;
+      MainWindowDataContext = new MainWindowDataContext();
+      MainWindowDataContextStatic = MainWindowDataContext;
+      DataContext = MainWindowDataContext;
+
+      frStatus.Navigate(new Session.Session(MainWindowDataContext,
+        (User user) => {
+          MainWindowDataContext.Status.Status = $"Bejelentkezve {user.Username}\nEgyenleg: {user.Balance}";
+        }
+        ));
 
       var cars = SqlConnection.Query<Car>("SELECT * FROM Cars").ToList();
       cars.ForEach((c) => MainWindow.Logger.SysLog($"Got {c.Name} for {c.Price}", ELogLvl.TRACE));
-      mainWindowDataContext.cars.cars = [.. cars];
+      Application.Current.Dispatcher.Invoke(() => {
+        MainWindowDataContext.cars.Clear();
+        cars.ForEach((c) => MainWindowDataContext.cars.Add(c));
+      });
+      cars.ForEach((c) => c.Pics = MainWindow.CM.GetPicsByCarId(c.Id));
 
       Session.Session.LoginEvent += () => {
         MainWindow.Logger.SysLog("Login event triggered", ELogLvl.TRACE);
-        mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
-        mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
+        MainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
+        MainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
       };
 
       Session.Session.LogoutEvent += () => {
@@ -41,13 +54,23 @@ namespace car.Pages.Main {
           adminTool.Dispose();
           adminTool = null;
         }
-        mainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
-        mainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
+        MainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
+        MainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
       };
     }
 
+    public static void FetchCars() {
+      var cars = SqlConnection.Query<Car>("SELECT * FROM Cars").ToList();
+      cars.ForEach((c) => MainWindow.Logger.SysLog($"Got {c.Name} for {c.Price}", ELogLvl.TRACE));
+      Application.Current.Dispatcher.Invoke(() => {
+        MainWindowDataContextStatic.cars.Clear();
+        cars.ForEach((c) => MainWindowDataContextStatic.cars.Add(c));
+      });
+      cars.ForEach((c) => c.Pics = MainWindow.CM.GetPicsByCarId(c.Id));
+    }
+
     private void miAdmin_Click(object sender, RoutedEventArgs e) {
-      if (adminTool != null) {
+      if (adminTool != null && adminTool.IsOpen) {
         MainWindow.Logger.SysLog("Admin tool already open", ELogLvl.TRACE);
         adminTool.Focus();
         return;
@@ -67,6 +90,23 @@ namespace car.Pages.Main {
       } else {
         MainWindow.Logger.SysLog("Item is null", ELogLvl.ERROR);
       }
+    }
+
+    private void miUpdate_Click(object sender, RoutedEventArgs e) {
+      FetchCars();
+    }
+
+    private void miInv_click(object sender, RoutedEventArgs e) {
+      MainWindowDataContext newDC = new();
+      newDC.Status = MainWindowDataContext.Status;
+      newDC.AdminVisibility = MainWindowDataContext.AdminVisibility;
+      newDC.SellerVisiblity = MainWindowDataContext.SellerVisiblity;
+      var cars = SqlConnection.Query<Car>("SELECT * FROM Cars WHERE Id IN (SELECT CarId FROM Transactions WHERE AccountId = @Id)", new { Id = Session.Session.User.Id }).ToList();
+      newDC.cars.Clear();
+      cars.ForEach((c) => MainWindow.Logger.SysLog($"Got {c.Name} for {c.Price}", ELogLvl.TRACE));
+      cars.ForEach((c) => c.Pics = MainWindow.CM.GetPicsByCarId(c.Id));
+      cars.ForEach(newDC.cars.Add);
+      MainWindow.MainPage.NavigationService?.Navigate(new Inventory.Inventory(newDC));
     }
   }
 }

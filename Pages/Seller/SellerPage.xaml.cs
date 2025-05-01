@@ -100,6 +100,7 @@ namespace car.Pages.Seller {
       } finally {
         SqlConnection.Close();
       }
+      Main.Main.FetchCars();
     }
   }
 }

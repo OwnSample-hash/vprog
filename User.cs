@@ -17,7 +17,15 @@ namespace car {
       set => this.Permission = (ESessionType)value;
     }
 
-    public decimal Balance { get; set; } = 0;
+    decimal _Balance { get; set; } = 0;
+
+    public decimal Balance {
+      get => _Balance;
+      set {
+        _Balance = value;
+        UserBalChangeEvent?.Invoke(this);
+      }
+    }
 
     public override string ToString() {
       return $"{Id} {Username} {Permission} {PermissionId} {Balance}";
@@ -40,5 +48,16 @@ namespace car {
         Permission = ESessionType.System
       };
     }
+
+    public static bool IsUserValid(User? user) =>
+      user != null &&
+      user.Id > 0 &&
+      user.Username != "" &&
+      user.Password != "" &&
+      user.Permission != ESessionType.None;
+
+    public delegate void UserBalChangeEventHandler(User user);
+
+    public event UserBalChangeEventHandler? UserBalChangeEvent;
   }
 }

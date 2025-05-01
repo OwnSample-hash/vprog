@@ -33,7 +33,7 @@
                 <Label Content="{Binding Description}" FontSize="16" Margin="150,0" />
                 <StackPanel Orientation="Horizontal" >
                     <Button Content="Mégse" Margin="150,30" Click="Button_Click"/>
-                    <Button Content="Vásárlás" />
+                    <Button Content="Vásárlás" Click="Button_Click_1" x:Name="btnBuy"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

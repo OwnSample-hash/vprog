@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:car"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="MainWindow" Height="720" Width="1375"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{StaticResource MaterialDesignWindow}"
         >

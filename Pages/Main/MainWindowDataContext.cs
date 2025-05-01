@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using car.Models;
 using car.Pages.Session;
@@ -6,28 +7,27 @@ using car.Pages.Session;
 namespace car.Pages.Main {
   public class MainWindowDataContext {
 
-    public IsAdminVis AdminVisibility { get; } = new();
+    public IsAdminVis AdminVisibility { get; set; } = new();
 
-    public IsSellerVis SellerVisiblity { get; } = new();
+    public IsSellerVis SellerVisiblity { get; set; } = new();
 
-    public CarNPC cars { get; set; } = new();
+    public StatusMsg Status { get; set; } = new();
+
+    public ObservableCollection<Car> cars { get; set; } = [];
   }
 
-  public class CarNPC : INotifyPropertyChanged {
-
-    List<Car> _cars = new();
-
-    public List<Car> cars {
-      get => _cars; set {
-        _cars = value;
-        OnPropertyChanged(nameof(cars));
+  public class StatusMsg : INotifyPropertyChanged {
+    private string _status = "Kérlek jelentkezz be!";
+    public string Status {
+      get => _status;
+      set {
+        _status = value;
+        OnPropertyChanged(nameof(Status));
       }
     }
-
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged(string propertyName) {
       MainWindow.Logger.SysLog($"Property changed: {propertyName}", Logging.ELogLvl.TRACE);
-      MainWindow.Logger.SysLog($"Callbacks: {PropertyChanged?.GetInvocationList().Length}", Logging.ELogLvl.TRACE);
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }

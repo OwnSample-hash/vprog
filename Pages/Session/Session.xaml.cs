@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using static car.User;
 
 namespace car.Pages.Session {
   /// <summary>
@@ -6,8 +7,15 @@ namespace car.Pages.Session {
   /// </summary>
   public partial class Session : Page {
 
-    public Session() {
+    Main.MainWindowDataContext MWDC { get; set; }
+
+    UserBalChangeEventHandler UserBalChangeEventHandler { get; set; }
+
+    public Session(Main.MainWindowDataContext MWDC, UserBalChangeEventHandler handler) {
       InitializeComponent();
+      this.MWDC = MWDC;
+      UserBalChangeEventHandler = handler;
+      DataContext = MWDC;
     }
   }
 }

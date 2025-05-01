@@ -15,8 +15,19 @@ namespace car.Pages.Main {
 
     public CarDetailsDC(Car car) {
       _Id = car.Id;
-      _Image1 = car.Pics[0];
-      _Image2 = car.Pics[1];
+      try {
+        _Image1 = car.Pics[0];
+        _Image2 = car.Pics[1];
+      } catch (ArgumentOutOfRangeException e) {
+        MainWindow.Logger.SysLog($"Error: {e.Message}", Logging.ELogLvl.ERROR);
+        if (car.Pics.Count > 0) {
+          _Image1 = car.Pics[0];
+          _Image2 = new BitmapImage();
+        } else {
+          _Image1 = new BitmapImage();
+          _Image2 = new BitmapImage();
+        }
+      }
       _Price = car.Price;
       _Name = car.Name;
       _Description = car.Description;
@@ -50,8 +61,8 @@ namespace car.Pages.Main {
       }
     }
 
-    float _Price { get; set; }
-    public float Price {
+    decimal _Price { get; set; }
+    public decimal Price {
       get => _Price;
       set {
         _Price = value;

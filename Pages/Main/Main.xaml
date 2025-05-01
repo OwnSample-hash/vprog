@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:car.Pages.Main"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       Title="Main">
 
     <Page.DataContext>
@@ -17,7 +18,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="270" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -25,14 +26,14 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        
         <Menu Grid.ColumnSpan="3">
-            <MenuItem Header="File">
-                <MenuItem Header="Seller" Visibility="{Binding SellerVisiblity.SellerVisibility}" Click="miSeller_Click"/>
-                <MenuItem Header="Admin"  Visibility="{Binding AdminVisibility.AdminVisibility}"  Click="miAdmin_Click"/>
+            <MenuItem Header="Fájl" Icon="{materialDesign:PackIcon Kind=Menu}">
+                <MenuItem Header="Frissítés" Click="miUpdate_Click" Icon="{materialDesign:PackIcon Kind=Refresh}"/>
+                <MenuItem Header="Saját raktár" Click="miInv_click"/>
+                <MenuItem Header="Eladói menü" Visibility="{Binding SellerVisiblity.SellerVisibility}" Click="miSeller_Click"/>
+                <MenuItem Header="Admin menü"  Visibility="{Binding AdminVisibility.AdminVisibility}"  Click="miAdmin_Click"/>
             </MenuItem>
         </Menu>
-
 
         <Label Grid.Row="0" Grid.Column="1"
            Content="Autóskereskedés"
@@ -40,12 +41,13 @@
            HorizontalAlignment="Center"
            FontSize="32" FontWeight="Bold"/>
 
-        <Frame Grid.Row="0" Grid.Column="2"
-           Source="/Pages/Session/Session.xaml" />
+        <Viewbox Grid.Row="0" Grid.Column="2" MaxWidth="250">
+            <Frame x:Name="frStatus" Source="/Pages/Session/Session.xaml" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </Viewbox>
 
         <ListBox x:Name="CatalogList"
              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-             ItemsSource="{Binding cars.cars}"
+             ItemsSource="{Binding cars}"
              BorderThickness="0"
              SelectionMode="Single">
               
@@ -57,7 +59,7 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Width="250" Height="175" Click="Button_Click">
+                    <Button Width="250" Height="200" Click="Button_Click">
                         <StackPanel Margin="8">
                             <Grid Visibility="{Binding DataContext.SellerVisiblity.SellerVisibility , RelativeSource={RelativeSource AncestorType=Page}}">
                                 <Grid.ColumnDefinitions>
@@ -67,7 +69,7 @@
                                 <Label Content="Azonosító:" Foreground="Black"/>
                                 <Label Content="{Binding Id}" Foreground="Black" Grid.Column="1"/>
                             </Grid>
-                            <Image Source="{Binding Pics[0]}" Stretch="UniformToFill"/>
+                            <Image Source="{Binding Pics[0]}" Stretch="UniformToFill" MaxHeight="120" MinWidth="220"/>
                             <TextBlock Text="{Binding Name}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Button>
