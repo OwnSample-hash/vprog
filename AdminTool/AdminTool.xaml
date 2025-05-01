@@ -11,9 +11,6 @@
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
-    <Window.InputBindings>
-        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitCommand}"/>
-    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="15"/>
@@ -24,11 +21,6 @@
             <ColumnDefinition Width="640"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Menu>
-            <MenuItem Header="_File">
-                <MenuItem Header="_Quit" x:Name="quit" Click="quit_Click" InputGestureText="Ctrl+Q" Icon="{materialDesign:PackIcon  Kind=ExitToApp}"/>
-            </MenuItem>
-        </Menu>
         <DataGrid ItemsSource="{Binding LogViewModel.Logs}" AutoGenerateColumns="False" CanUserSortColumns="True"
           CanUserAddRows="False" IsReadOnly="True" HeadersVisibility="Column"
           VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">

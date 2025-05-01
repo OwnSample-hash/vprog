@@ -19,6 +19,8 @@ namespace car.AdminTool {
 
     private SqlConnection SqlConnection = new(MainWindow.conString);
 
+    public bool IsOpen => !_disposed && Visibility == Visibility.Visible;
+
     public AdminTool() {
       InitializeComponent();
       SqlConnection.Open();
@@ -71,18 +73,16 @@ namespace car.AdminTool {
       if (_disposed)
         return;
       MainWindow.Logger.SysLog("Disposing AdminTool", ELogLvl.DEBUG);
-      SqlConnection.Close();
       _disposed = true;
       LogPoller.Wait();
       LogPoller.Dispose();
+      SqlConnection.Close();
+      SqlConnection.Dispose();
+      GC.SuppressFinalize(this);
     }
 
     ~AdminTool() {
       Dispose();
-    }
-
-    private void quit_Click(object sender, RoutedEventArgs e) {
-      App.Current.Shutdown();
     }
   }
 }
