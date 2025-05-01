@@ -1,0 +1,1 @@
+DROP TRIGGER Transaction_Update_Bal;
