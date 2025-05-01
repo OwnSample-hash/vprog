@@ -36,6 +36,7 @@ public partial class MainWindow : Window {
         Logger.SysLog("Force skipping down", ELogLvl.DEBUG);
       }
     }
+    Logger.SysLog("Starting MainWindow", ELogLvl.DEBUG);
     InitializeComponent();
     MainPage = frMain;
 

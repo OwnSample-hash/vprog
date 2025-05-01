@@ -29,7 +29,7 @@ namespace car.DB {
       var files = Directory.GetFiles("Migrations");
       if (downFirst) {
         foreach (string file in files.Reverse().Where((e) => e.EndsWith(".down.sql"))) {
-          Console.WriteLine($"Downing: {file}");
+          MainWindow.Logger.SysLog($"Downing: {file}", Logging.ELogLvl.TRACE);
           string sql = File.ReadAllText(file);
           _connection.Execute(sql);
           if (_verbose) {
@@ -40,7 +40,7 @@ namespace car.DB {
         }
       }
       foreach (string file in files.Where((e) => e.EndsWith(".up.sql"))) {
-        Console.WriteLine($"Upping: {file}");
+        MainWindow.Logger.SysLog($"Upping: {file}", Logging.ELogLvl.TRACE);
         string sql = File.ReadAllText(file);
         _connection.Execute(sql);
         if (_verbose) {
@@ -57,7 +57,7 @@ namespace car.DB {
         return false;
       foreach (string file in Directory.GetFiles("Seeds")) {
         string sql = File.ReadAllText(file);
-        Console.WriteLine($"{file} affected {_connection.Execute(sql)} rows");
+        MainWindow.Logger.SysLog($"{file} affected {_connection.Execute(sql)} rows", Logging.ELogLvl.TRACE);
         if (_verbose) {
           Console.WriteLine("--");
           Console.WriteLine($"Ran sql:\n{sql}");
