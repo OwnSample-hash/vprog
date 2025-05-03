@@ -11,6 +11,8 @@ namespace car.Pages.Main {
 
     public IsSellerVis SellerVisiblity { get; set; } = new();
 
+    public IsUserVis UserVisibility { get; set; } = new();
+
     public StatusMsg Status { get; set; } = new();
 
     public ObservableCollection<Car> cars { get; set; } = [];
@@ -48,6 +50,18 @@ namespace car.Pages.Main {
     private bool IsSeller => Session.Session.User.Permission == ESessionType.Seller || Session.Session.User.Permission == ESessionType.Admin;
     public Visibility SellerVisibility {
       get => IsSeller ? Visibility.Visible : Visibility.Collapsed;
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public void OnPropertyChanged(string propertyName) {
+      MainWindow.Logger.SysLog($"Property changed: {propertyName}", Logging.ELogLvl.TRACE);
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+  }
+
+  public class IsUserVis : INotifyPropertyChanged {
+    private bool IsUser => User.IsUserValid(Session.Session.User);
+    public Visibility UserVisibility {
+      get => IsUser ? Visibility.Visible : Visibility.Collapsed;
     }
     public event PropertyChangedEventHandler? PropertyChanged;
     public void OnPropertyChanged(string propertyName) {

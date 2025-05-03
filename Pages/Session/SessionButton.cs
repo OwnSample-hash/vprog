@@ -6,8 +6,6 @@ namespace car.Pages.Session {
 
     public static User User { get; private set; } = User.getEmpty();
 
-    private ESessionAuthError _eSessionAuthError = ESessionAuthError.OK;
-
     public delegate void LoginEventHandler();
 
     public static event LoginEventHandler? LoginEvent;
@@ -22,13 +20,12 @@ namespace car.Pages.Session {
           MainWindow.Logger.Log($"User {user.Username} logged in");
           btLogin.Visibility = Visibility.Collapsed;
           btLogout.Visibility = Visibility.Visible;
+          MWDC.Status.Status = $"Bejelentkezve {user.Username}\nEgyenleg: {user.Balance}";
           LoginEvent?.Invoke();
           MainWindow.MainPage.NavigationService?.GoBack();
           MainWindow.MainPage.NavigationService?.RemoveBackEntry();
-          MWDC.Status.Status = $"Bejelentkezve {user.Username}\nEgyenleg: {user.Balance}";
         } else {
           MainWindow.Logger.Log("Login failed");
-          _eSessionAuthError = ESessionAuthError.InvalidCredentials;
         }
       }));
     }

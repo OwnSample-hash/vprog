@@ -44,6 +44,7 @@ namespace car.Pages.Main {
         MainWindow.Logger.SysLog("Login event triggered", ELogLvl.TRACE);
         MainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
         MainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
+        MainWindowDataContext.UserVisibility.OnPropertyChanged("UserVisibility");
       };
 
       Session.Session.LogoutEvent += () => {
@@ -56,6 +57,7 @@ namespace car.Pages.Main {
         }
         MainWindowDataContext.AdminVisibility.OnPropertyChanged("AdminVisibility");
         MainWindowDataContext.SellerVisiblity.OnPropertyChanged("SellerVisibility");
+        MainWindowDataContext.UserVisibility.OnPropertyChanged("UserVisibility");
       };
     }
 
@@ -97,6 +99,11 @@ namespace car.Pages.Main {
     }
 
     private void miInv_click(object sender, RoutedEventArgs e) {
+      if (!User.IsUserValid(Session.Session.User)) {
+        MainWindow.Logger.SysLog("User not logged in", ELogLvl.ERROR);
+        MessageBox.Show("Be kell jelentkezned a folytatáshoz!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        return;
+      }
       MainWindowDataContext newDC = new();
       newDC.Status = MainWindowDataContext.Status;
       newDC.AdminVisibility = MainWindowDataContext.AdminVisibility;

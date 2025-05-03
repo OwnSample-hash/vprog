@@ -29,7 +29,7 @@
         <Menu Grid.ColumnSpan="3">
             <MenuItem Header="Fájl" Icon="{materialDesign:PackIcon Kind=Menu}">
                 <MenuItem Header="Frissítés" Click="miUpdate_Click" Icon="{materialDesign:PackIcon Kind=Refresh}"/>
-                <MenuItem Header="Saját raktár" Click="miInv_click"/>
+                <MenuItem Header="Saját raktár" Click="miInv_click" Visibility="{Binding UserVisibility.UserVisibility}"/>
                 <MenuItem Header="Eladói menü" Visibility="{Binding SellerVisiblity.SellerVisibility}" Click="miSeller_Click"/>
                 <MenuItem Header="Admin menü"  Visibility="{Binding AdminVisibility.AdminVisibility}"  Click="miAdmin_Click"/>
             </MenuItem>

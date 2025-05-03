@@ -22,11 +22,20 @@ namespace car.Pages.Login {
     }
 
     private void btnLogin_Click(object sender, RoutedEventArgs e) {
-      // TODO: Add error handling/logging
       if (tbNev.Text != "" && pbJelszo.Password != "") {
         var user = _connection.Query<User>
           ("SELECT * FROM Users WHERE Username = @Username", new { Username = tbNev.Text }).FirstOrDefault();
         if (user == null) {
+          tbNev.BorderBrush = System.Windows.Media.Brushes.Red;
+          tbNev.BorderThickness = new Thickness(2);
+          tbNev.Text = "";
+          tbNev.GotFocus += RemoveBorder;
+          pbJelszo.BorderBrush = System.Windows.Media.Brushes.Red;
+          pbJelszo.BorderThickness = new Thickness(2);
+          pbJelszo.Password = "";
+          pbJelszo.GotFocus += RemoveBorder;
+          MainWindow.Logger.SysLog("Login failed");
+          MessageBox.Show("Sikertelen bejelentkezés!");
           return;
         }
         if (BC.Verify(pbJelszo.Password, user.Password)) {
@@ -34,10 +43,31 @@ namespace car.Pages.Login {
           return;
         } else {
           _storeUser(User.getEmpty(), false);
+          tbNev.BorderBrush = System.Windows.Media.Brushes.Red;
+          tbNev.BorderThickness = new Thickness(2);
+          tbNev.Text = "";
+          tbNev.GotFocus += RemoveBorder;
+          pbJelszo.BorderBrush = System.Windows.Media.Brushes.Red;
+          pbJelszo.BorderThickness = new Thickness(2);
+          pbJelszo.Password = "";
+          pbJelszo.GotFocus += RemoveBorder;
+          MainWindow.Logger.SysLog("Login failed");
+          MessageBox.Show("Sikertelen bejelentkezés!");
           return;
         }
       } else {
         MessageBox.Show("A mezőket ki kell tölteni!");
+      }
+    }
+    private void RemoveBorder(object sender, object _) {
+      if (sender is TextBox tb) {
+        tb.BorderThickness = new Thickness(0);
+        tb.BorderBrush = System.Windows.Media.Brushes.Transparent;
+        tb.GotFocus -= RemoveBorder;
+      } else if (sender is PasswordBox pb) {
+        pb.BorderThickness = new Thickness(0);
+        pb.BorderBrush = System.Windows.Media.Brushes.Transparent;
+        pb.GotFocus -= RemoveBorder;
       }
     }
 
