@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Z.Dapper.Plus;
@@ -31,7 +32,15 @@ namespace car.DB {
         foreach (string file in files.Reverse().Where((e) => e.EndsWith(".down.sql"))) {
           MainWindow.Logger.SysLog($"Downing: {file}", Logging.ELogLvl.TRACE);
           string sql = File.ReadAllText(file);
-          _connection.Execute(sql);
+          try {
+            _connection.Execute(sql);
+          } catch (SqlException ex) {
+            MessageBox.Show($"Error running down migration: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (ex.Message.Contains("Cannot drop")) {
+              MessageBox.Show("Cannot drop the table/trigger, hold sifth to bypass --down", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            return false;
+          }
           if (_verbose) {
             Console.WriteLine("--");
             Console.WriteLine($"Ran sql:\n{sql}");

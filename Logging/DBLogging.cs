@@ -29,6 +29,9 @@ namespace car.Logging {
       }
       senderThread = new(() => {
         while (!_disposed) {
+          while (!MainWindow.IsDBReady) {
+            Thread.Sleep(100);
+          }
           if (!Ready) {
             try {
               _connection.Open();

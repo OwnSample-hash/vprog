@@ -45,6 +45,9 @@ namespace car.Picture {
     }
 
     void Thread() {
+      while (!MainWindow.IsDBReady) {
+        System.Threading.Thread.Sleep(100);
+      }
       List<Task<Cache>> tasks = [];
       while (!_disposed) {
         var start = DateTime.Now.Nanosecond;

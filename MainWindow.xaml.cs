@@ -10,13 +10,15 @@ namespace car;
 /// </summary>
 public partial class MainWindow : Window {
 
-  public static string conString = App.Conf.ConnectionString;
+  public static string conString => App.Conf.ConnectionString;
 
-  public static ILogger Logger = new DBLogging();
+  public static ILogger Logger { get; private set; } = new DBLogging();
 
-  public static bool Verbose = Environment.GetCommandLineArgs().Any((e) => e == "--verbose") || App.Conf.Verbose;
+  public static bool IsDBReady { get; private set; } = false;
 
-  public static CacheManager CM = new("Picture");
+  public static bool Verbose => Environment.GetCommandLineArgs().Any((e) => e == "--verbose") || App.Conf.Verbose;
+
+  public static CacheManager CM { get; private set; } = new("Picture");
 
   public static System.Windows.Controls.Frame MainPage { get; private set; } = null!;
 
@@ -36,9 +38,6 @@ public partial class MainWindow : Window {
         Logger.SysLog("Force skipping down", ELogLvl.DEBUG);
       }
     }
-    Logger.SysLog("Starting MainWindow", ELogLvl.DEBUG);
-    InitializeComponent();
-    MainPage = frMain;
 
     var args = Environment.GetCommandLineArgs();
     var migration = new DB.MigrationManager(conString, Verbose);
@@ -47,6 +46,8 @@ public partial class MainWindow : Window {
         Logger.SysLog("Migration completed!");
       } else {
         Logger.SysLog("Migration failed!", ELogLvl.ERROR);
+        MessageBox.Show("Migration failed!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        Environment.Exit(1);
       }
     }
     if (args.Length > 1 && args.Any((e) => e == "--seed")) {
@@ -54,8 +55,17 @@ public partial class MainWindow : Window {
         Logger.SysLog("Seed completed!");
       } else {
         Logger.SysLog("Seed failed!", ELogLvl.ERROR);
+        MessageBox.Show("Seed failed!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        Environment.Exit(1);
       }
     }
+    IsDBReady = true;
+    Logger.SysLog("DB is ready", ELogLvl.DEBUG);
+
+    Logger.SysLog("Starting MainWindow", ELogLvl.DEBUG);
+    InitializeComponent();
+    MainPage = frMain;
+
     this.Closed += (_, _) => {
       Logger.SysLog("Closing MainWindow", ELogLvl.DEBUG);
       if (Verbose) {
