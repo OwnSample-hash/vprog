@@ -41,7 +41,7 @@ public partial class MainWindow : Window {
 
     var args = Environment.GetCommandLineArgs();
     var migration = new DB.MigrationManager(conString, Verbose);
-    if (args.Length > 1 && args.Any((e) => e == "--migrate")) {
+    if (args.Length > 1 && args.Any((e) => e == "--migrate") || App.Conf.Migrate) {
       if (migration.Migrate(!SkipDown && args.Any((e) => e == "--down"))) {
         Logger.SysLog("Migration completed!");
       } else {
@@ -50,7 +50,7 @@ public partial class MainWindow : Window {
         Environment.Exit(1);
       }
     }
-    if (args.Length > 1 && args.Any((e) => e == "--seed")) {
+    if (args.Length > 1 && args.Any((e) => e == "--seed") || App.Conf.Seed) {
       if (migration.Seed()) {
         Logger.SysLog("Seed completed!");
       } else {

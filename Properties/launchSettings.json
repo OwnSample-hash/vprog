@@ -1,8 +1,7 @@
 {
   "profiles": {
     "car": {
-      "commandName": "Project",
-      "commandLineArgs": "--migrate --down --seed --verbose"
+      "commandName": "Project"
     }
   }
 }

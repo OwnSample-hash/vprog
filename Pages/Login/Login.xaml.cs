@@ -35,7 +35,7 @@ namespace car.Pages.Login {
           pbJelszo.Password = "";
           pbJelszo.GotFocus += RemoveBorder;
           MainWindow.Logger.SysLog("Login failed");
-          MessageBox.Show("Sikertelen bejelentkezés!");
+          MessageBox.Show("Sikertelen bejelentkezés!", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
           return;
         }
         if (BC.Verify(pbJelszo.Password, user.Password)) {
@@ -52,11 +52,11 @@ namespace car.Pages.Login {
           pbJelszo.Password = "";
           pbJelszo.GotFocus += RemoveBorder;
           MainWindow.Logger.SysLog("Login failed");
-          MessageBox.Show("Sikertelen bejelentkezés!");
+          MessageBox.Show("Sikertelen bejelentkezés!", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
           return;
         }
       } else {
-        MessageBox.Show("A mezőket ki kell tölteni!");
+        MessageBox.Show("A mezőket ki kell tölteni!", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
     private void RemoveBorder(object sender, object _) {

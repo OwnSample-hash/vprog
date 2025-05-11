@@ -49,8 +49,11 @@
                 <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="100" />
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox Grid.Row="2" Grid.Column="1"
-                  ItemsSource="{Binding DataContext.LogLevels, RelativeSource={RelativeSource AncestorType=Window}}"
-                  SelectedItem="{Binding ELogLvl, Mode=TwoWay}" Margin="100"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="100">
+            <Label Content="Log Level"/>
+            <ComboBox   
+                ItemsSource="{Binding DataContext.LogLevels, RelativeSource={RelativeSource AncestorType=Window}}"
+                SelectedItem="{Binding ELogLvl, Mode=TwoWay}"/>
+        </StackPanel>
     </Grid>
 </Window>
